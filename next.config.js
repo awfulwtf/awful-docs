@@ -1,7 +1,14 @@
-const withNextra = require("nextra")({
-  theme: "nextra-theme-docs",
-  themeConfig: "./theme.config.js"
-  // `unstable_staticImage: true` to enable Nextra's auto image import
-});
+const withMarkdoc = require('@markdoc/next.js')
 
-module.exports = withNextra();
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  pageExtensions: ['js', 'jsx', 'md'],
+  swcMinify: true,
+  experimental: {
+    newNextLinkBehavior: true,
+    scrollRestoration: true,
+  },
+}
+
+module.exports = withMarkdoc()(nextConfig)
