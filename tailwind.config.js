@@ -22,13 +22,13 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', ...defaultTheme.fontFamily.sans],
-        display: ['Lexend', ...defaultTheme.fontFamily.sans],
+        sans: [...defaultTheme.fontFamily.sans],
+        display: [...defaultTheme.fontFamily.sans],
       },
       maxWidth: {
         '8xl': '88rem',
       },
     },
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [require('@tailwindcss/typography'), require('tailwind-scrollbar')],
 }

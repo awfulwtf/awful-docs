@@ -5,6 +5,7 @@ import { Layout } from '@/components/Layout'
 
 import 'focus-visible'
 import '@/styles/tailwind.css'
+import '@fontsource/inter'
 
 function getNodeText(node) {
   let text = ''
@@ -67,6 +68,7 @@ export default function App({ Component, pageProps }) {
         <title>{pageTitle}</title>
         {description && <meta name="description" content={description} />}
       </Head>
+
       <Layout title={title} tableOfContents={tableOfContents}>
         <Component {...pageProps} />
       </Layout>

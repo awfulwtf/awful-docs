@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import Image from 'next/future/image'
 import clsx from 'clsx'
 import Highlight, { defaultProps } from 'prism-react-renderer'
@@ -8,10 +8,10 @@ import { HeroBackground } from '@/components/HeroBackground'
 import blurCyanImage from '@/images/blur-cyan.png'
 import blurIndigoImage from '@/images/blur-indigo.png'
 
-const codeLanguage = 'javascript'
-const code = `yourActor.lock = {}
-  yourActor.lock.ready = player.class2 == "WARLOCK"
-  yourActor.lock.aff = awful.Actor:New({
+const codeLanguage = 'lua'
+const code = `awful.lock = {}
+awful.lock.ready = player.class2 == "WARLOCK"
+awful.lock.aff = awful.Actor:New({
       spec = 1,
       class = "warlock",
   })
@@ -34,7 +34,7 @@ function TrafficLightsIcon(props) {
 
 export function Hero() {
   return (
-    <div className="overflow-hidden bg-slate-900 dark:-mb-32 dark:mt-[-4.5rem] dark:pb-32 dark:pt-[4.5rem] dark:lg:mt-[-4.75rem] dark:lg:pt-[4.75rem]">
+    <div className="overflow-hidden dark:-mb-32 dark:mt-[-4.5rem] dark:bg-slate-900 dark:pb-32 dark:pt-[4.5rem] dark:lg:mt-[-4.75rem] dark:lg:pt-[4.75rem]">
       <div className="py-16 sm:px-2 lg:relative lg:py-20 lg:px-0">
         <div className="mx-auto grid max-w-2xl grid-cols-1 items-center gap-y-16 gap-x-8 px-4 lg:max-w-8xl lg:grid-cols-2 lg:px-8 xl:gap-x-16 xl:px-12">
           <div className="relative z-10 md:text-center lg:text-left">
@@ -49,16 +49,19 @@ export function Hero() {
             />
             <div className="relative">
               <p className="inline bg-gradient-to-r from-indigo-200 via-sky-400 to-indigo-200 bg-clip-text font-display text-5xl tracking-tight text-transparent">
-                Awful Docs
+                awful framework
               </p>
               <p className="mt-3 text-2xl tracking-tight text-slate-400">
-                Powerful, Lightweight, Free to use, and best of all, easy to learn.
+                powerful, lightweight, free to use, and easy to learn tools for
+                developers of WoW automation software.
               </p>
               <div className="mt-8 flex gap-4 md:justify-center lg:justify-start">
-                <Button href="/">Get started</Button>
-                {/*<Button href="/" variant="secondary">
-                  View on GitHub
-                </Button>*/}
+                <button className="rounded-lg bg-blue-400 px-4 py-2" href="/">
+                  explore
+                </button>
+                {/* <Button href="/" variant="secondary">
+                  download awful
+                </Button> */}
               </div>
             </div>
           </div>
