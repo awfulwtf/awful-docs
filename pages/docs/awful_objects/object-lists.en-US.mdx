@@ -13,15 +13,15 @@ import Link from 'next/link'
 
 ### Freshness
 
-> You must always grab lists fresh where you need them. You can't declare them locally outside of your working scope like you can [static objects](/static-objects.md), or they'll become stale. Generally you'll wanna access them directly from the awful namespace, e.g, `awful.enemies`. Though there are a couple of exceptions where they can be accessed by name directly (like `enemies` or `group`), namely inside the **Routine Actor** and your Spell Object **:Callback** functions.
+> You must always grab lists fresh where you need them. You can't declare them locally outside of your working scope like you can [static objects](static-objects), or they'll become stale. Generally you'll wanna access them directly from the awful namespace, e.g, `awful.enemies`. Though there are a couple of exceptions where they can be accessed by name directly (like `enemies` or `group`), namely inside the **Routine Actor** and your Spell Object **:Callback** functions.
 
 ### Magic Methods
 
 > Object Lists contain several **Magic Methods** which allow you to do powerful searches, iterations, and more with the objects contained. Some examples:
 >
-> [around](/object-lists.md?id=around): finds objects from the list that are within a given distance of another awful object
+> [around](object-lists#around): finds objects from the list that are within a given distance of another awful object
 >
-> [loop](/object-lists.md?id=loop): an iteration alternative to standard **for loops**, allowing you to mimic and reap the benefits of a [**continue statement**](https://www.geeksforgeeks.org/continue-statement-cpp/) to write cleaner, significantly less indented ~~spaghetti~~ code.
+> [loop](object-lists#loop): an iteration alternative to standard **for loops**, allowing you to mimic and reap the benefits of a [**continue statement**](https://www.geeksforgeeks.org/continue-statement-cpp/) to write cleaner, significantly less indented ~~spaghetti~~ code.
 >
 > We go over the rest at the end of this section, so stick around.
 
@@ -320,7 +320,7 @@ end)
   - Allows you to mimic the functionality of a [continue statement](https://www.geeksforgeeks.org/continue-statement-cpp/), an invaluable tool not available to Lua, by simply closing eliminating conditions with a **return**
   - This (on average) reduces code spaghetti by a breathtaking 42.069%.
   - Fr tho, way less indenting. Check the example below.
-- Check [best practices - spaghettification](best-practices?id=spaghettification) for more tips on reducing spaghetti-sauce in your code.
+- Check [best practices - spaghettification](#) for more tips on reducing spaghetti-sauce in your code.
 - `forEach` is a valid alternate key for the same method
 
 ```lua

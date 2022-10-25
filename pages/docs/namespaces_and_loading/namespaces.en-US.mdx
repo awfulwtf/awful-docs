@@ -33,7 +33,7 @@ If you are familiar with web development, this is similar to **state management*
 
 - On an unlocker like Tinkr, you'll find the unlocker's API within. On most others, like Daemonic, its only purpose is to inform you which unlocker is in use.
 
-> The unlocker name is always available as a string in camelCase under `Unlocker.type`, so if you are doing anything unlocker-specific, outside of the scope of the framework, you can follow [best practices](best-practices.md) by checking the unlocker type first to ensure compatibility across all platforms.
+> The unlocker name is always available as a string in camelCase under `Unlocker.type`, so if you are doing anything unlocker-specific, outside of the scope of the framework, you can follow [best practices](#) by checking the unlocker type first to ensure compatibility across all platforms.
 
 **`Unlocker.type : nil | "daemonic" | "unlockerName"`**
 
@@ -78,7 +78,7 @@ print(awful.hello)
 
 - #### This one is special compared to the others, and it's all yours!
 
-> This namespace is made available to **your project and only your project**. It allows you to **build out your own extensive API**, **store and access data and functions between your other files**, and **expose variables to awful to unlock magic capabilities, such as syncing settings from the [Web GUI](web-gui.md)**.
+> This namespace is made available to **your project and only your project**. It allows you to **build out your own extensive API**, **store and access data and functions between your other files**, and **expose variables to awful to unlock magic capabilities, such as syncing settings.
 
 ```lua
 local Unlocker, awful, McDonalds = ...

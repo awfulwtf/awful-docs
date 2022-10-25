@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 ## What's an attribute?
 
-> An attribute is just a **key** within an [awful object](objects.md) that is expected to return some **value**.
+> An attribute is just a **key** within an [awful object](objects) that is expected to return some **value**.
 >
 > All attributes are **non-case-sensitive** and many have **fallback aliases** for added intuitiveness factor.
 >
@@ -307,7 +307,7 @@ end
 
 If the object has an active stealth or invisibility effect, returns the spellID of that effect. Otherwise returns false.
 
-> Does not use a specific stealth list, but instead efficiently parses [`debuffDescriptions`](/object-attributes.md?id=debuffDescriptions) - should work on _all_ current & future stealth/invis effects in the game. If it does not, let us know the specific stealth effect.
+> Does not use a specific stealth list, but instead efficiently parses [`debuffDescriptions`](object-attributes#debuffDescriptions) - should work on _all_ current & future stealth/invis effects in the game. If it does not, let us know the specific stealth effect.
 
 **`unit.stealthed : stealthID | false`**
 
@@ -470,7 +470,7 @@ Checks if the object is charmed (mind control, etc.) using `UnitIsCharmed`
 
 Returns true if the target has an active damage over time effect, false if not.
 
-> Does not use a specific DoT list, but instead efficiently parses [`debuffDescriptions`](/object-attributes.md?id=debuffDescriptions) - should work on _all_ current & future DoT effects in the game. If it does not, let us know which DoT.
+> Does not use a specific DoT list, but instead efficiently parses [`debuffDescriptions`](object-attributes#debuffDescriptions) - should work on _all_ current & future DoT effects in the game. If it does not, let us know which DoT.
 
 **`unit.dotted : hasDot | false`**
 
@@ -944,7 +944,7 @@ end
 
 If the object is currently affected by a disarm, returns the spellID of that effect. Otherwise returns false.
 
-> Does not use a specific disarm list, but instead efficiently parses [`debuffDescriptions`](/object-attributes.md?id=debuffDescriptions) - should work on _all_ current & future disarm effects in the game. If it does not, let us know which disarm.
+> Does not use a specific disarm list, but instead efficiently parses [`debuffDescriptions`](object-attributes#debuffDescriptions) - should work on _all_ current & future disarm effects in the game. If it does not, let us know which disarm.
 
 **`unit.disarm : disarmID | false`**
 
@@ -1287,7 +1287,7 @@ end
 
 Checks if the unit is currently immune to polymorph effects.
 
-> Does not use a specific buff list, but instead efficiently parses [`debuffDescriptions`](/object-attributes.md?id=debuffDescriptions) - should work on _all_ current & future polymorph immunity effects in the game. If it does not, let us know which one.
+> Does not use a specific buff list, but instead efficiently parses [`debuffDescriptions`](object-attributes#debuffDescriptions) - should work on _all_ current & future polymorph immunity effects in the game. If it does not, let us know which one.
 
 > Alternatively: `immuneSheep`, `sheepImmune`
 
