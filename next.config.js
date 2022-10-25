@@ -1,14 +1,22 @@
-const withMarkdoc = require('@markdoc/next.js')
+const withNextra = require("nextra")({
+  theme: "nextra-theme-docs",
+  themeConfig: "./theme.config.js",
+  unstable_flexsearch: true,
+  unstable_staticImage: true,
+});
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  pageExtensions: ['js', 'jsx', 'md'],
-  swcMinify: true,
-  experimental: {
-    newNextLinkBehavior: true,
-    scrollRestoration: true,
+module.exports = withNextra({
+  i18n: {
+    locales: ["en-US"],
+    defaultLocale: "en-US",
   },
-}
-
-module.exports = withMarkdoc()(nextConfig)
+  redirects: () => {
+    return [
+      {
+        source: "/docs",
+        destination: "/docs/getting-started",
+        statusCode: 301,
+      },
+    ];
+  },
+});
