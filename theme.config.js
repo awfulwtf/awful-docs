@@ -69,12 +69,6 @@ export default {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { route } = useRouter();
 
-    const ogImage =
-      meta.image ||
-      `https://swr-card.vercel.app${
-        /\/index\.+/.test(route) ? "" : "?title=" + encodeURIComponent(title)
-      }`;
-
     return (
       <>
         {/* Favicons, meta */}
@@ -120,12 +114,10 @@ export default {
         />
         <meta name="twitter:card" content="summary_large_image" />
         {/* <meta name="twitter:site" content="@awfulwtf" /> */}
-        <meta name="twitter:image" content={ogImage} />
         <meta
           name="og:title"
           content={title ? title + " – Awful" : "Docs – Awful"}
         />
-        <meta name="og:image" content={ogImage} />
         <meta name="apple-mobile-web-app-title" content="Awful" />
       </>
     );
