@@ -8,7 +8,7 @@ import Link from 'next/link'
 > Elements are created using the methods found within **tab objects**. You create tab objects using `ui:Tab(name)`, which returns the tab object for that tab. You can then declare them locally or retrieve them from `ui.tabs["tab name"]` and start populating them with elements using the methods we're about to go over.
 >
 > ```lua
-> tab:Checkbox(`{text="hi", var="hi"}`)
+> tab:Checkbox({text="hi", var="hi"})
 > ```
 >
 > Now there's a checkbox on that tab!
