@@ -112,7 +112,6 @@ export default {
             "Awful is a lightweight framework with extreme performance for creating Addons for World of Warcraft."
           }
         />
-        <meta name="twitter:card" content="summary_large_image" />
         {/* <meta name="twitter:site" content="@awfulwtf" /> */}
         <meta
           name="og:title"
