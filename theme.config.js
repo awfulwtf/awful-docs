@@ -32,8 +32,8 @@ const FEEDBACK_LINK_WITH_TRANSLATIONS = {
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-  projectLink: "https://github.com/greenbrad/awful-docs",
-  docsRepositoryBase: "https://github.com/greenbrad/awful-docs/tree/main/pages",
+  projectLink: "https://github.com/awfulwtf/awful-docs",
+  docsRepositoryBase: "https://github.com/awfulwtf/awful-docs/tree/main/pages",
   nextLinks: true,
   prevLinks: true,
   titleSuffix: " – Awful",
