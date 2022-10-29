@@ -234,3 +234,13 @@ local bin = awful.bin
 ```lua
 { stupidChannel = true }
 ```
+
+## castByID
+
+> This spell should specifically be cast using its ID and not its resolved named
+Awful will always try to cast the spell by name, which can be an issue in Classic where downranking can be beneficial.
+By adding this trait you force it to cast by ID, which will allow you to downrank a spell to a specific Rank using that ranks SpellID.
+
+```lua
+{ castByID = true }
+```
