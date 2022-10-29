@@ -91,7 +91,7 @@ Contains enemy totems or related objects (PvP).
 ```lua
 awful.totems.stomp(function(totem, uptime)
     -- only totems that have been up for 300+ms
-    if uptime > 0.3 then return end
+    if uptime < 0.3 then return end
     -- stomp 'em
     return spell:Cast(totem)
 end)
@@ -111,7 +111,7 @@ awful.seeds.track(function(seed, uptime)
     -- auto target it
     if not seed.isUnit(target) then seed.setTarget() end
     -- only seeds that have been up for 300+ms
-    if uptime > 0.3 then return end
+    if uptime < 0.3 then return end
     -- stomp 'em
     return spell:Cast(seed)
 end)
