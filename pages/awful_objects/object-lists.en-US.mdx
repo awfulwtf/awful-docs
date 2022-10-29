@@ -80,6 +80,21 @@ awful.friends.loop(function(friend)
 end)
 ```
 
+## dead
+
+Contains all targetable dead units within render distance.
+
+- **Everywhere:** All targetable valid dead units.
+
+```lua
+-- casting a battle res on a dead friend
+awful.dead.loop(function(unit)
+    if not unit.friend then return end
+    if not unit.player then return end
+    return spell:Cast(unit)
+end)
+```
+
 ## totems
 
 Contains enemy totems or related objects (PvP).
