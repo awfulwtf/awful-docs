@@ -310,3 +310,43 @@ end)
 > ![mdd](/mdd.gif)
 >
 > Multi Dropdown from example above
+
+Sometimes a Spell can have multiple IDs, such as Polymorph due to various Glyphs that can be applied to it. If you don't want to have one entry per Polymorph in e.g. your Interrupt dropdown, then you can do as the below example:
+```lua
+--! MULTI-DROPDOWN WITH MULTIPLE SPELL IDS FOR SAME ENTRY !--
+General:Dropdown({
+	var = "interrupts",
+	multi = true,
+	tooltip = "Choose the Spell you want to Interrupt",
+	options = {
+		{ label = "Repentance", value = 20066 },
+		{ label = "Polymorph", value = "Polymorph", tvalue = {118,161355,161354,161353,126819,61780,161372,61721,61305,28272,28271,277792,277787} },
+	},
+	placeholder = "Select Interrupts",
+	header = "Casts to Interrupt:",
+  	default = {20066, "Polymorph"} -- optional default selections
+})
+-- example usage
+local function SettingsCheck(settingsVar, castId)
+    for k, v in pairs(settingsVar) do
+        if k == castId and v == true then return true end
+        if type(v) == "table" then
+            for _, id in ipairs(v) do
+                if castId == id then return true end
+            end
+        end
+    end
+end
+
+awful.enemies.loop(function(unit, i, uptime)
+    if not unit.casting then return end
+    if unit.casting and unit.castint then return end
+    if unit.castTimeComplete > 0.3 and unit.castRemains > awful.buffer then
+        if SettingsCheck(settings.interrupts, unit.castingid) then
+            if counterspell:Cast(unit) then
+                return true
+            end
+        end
+    end
+end)
+```
