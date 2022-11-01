@@ -338,6 +338,19 @@ Checks if the unit is visible (within render range) using `UnitIsVisible`
 
 **`unit.visible : visible | false`**
 
+## v2attackers()
+
+The amount of attackers for the provided object and their combined cooldown usage.
+
+**`unit.v2attackers() : totalUnits, meleeUnits, rangedUnits, cooldowns | 0, 0, 0, 0`**
+
+```lua
+local total, melee, ranged, cooldowns = player.v2attackers()
+if melee > 1 and cooldowns > 0 then
+    barkskin:Cast()
+end
+```
+
 # Buffs & Debuffs
 
 > There are also powerful [Buff & Debuff](/object-functions.md?id=buffs-amp-debuffs) related **functions**, rather than **attributes**... Be sure to check those out before beginning your implementation.
