@@ -55,20 +55,22 @@ project.print('Fire Mage Rotation Loaded')
 
 ### Create a load file
 
-> Within your base project directory ( awful/routines/**project** ) folder, you can assign a load order manually with the **load** file. You can give it the **.lua extension** for syntax highlighting, but **either make it .lua or give it no extension, or it will not be recognized.**
+> Within your base project directory ( awful/routines/**project** ) folder, you need to create a file named **awful-config.json**. You can assign a load order manually within this file. It must have the **.json** extension or it will not be recognized.
 
 - The base directory is your routine folder. The load order is from top to bottom. Here is an example of the contents of a `load.lua` file
 
 ```lua
-load = {
-    "/awful.lua",
-    "/mage/mage.lua",
-    "/mage/fire_actor.lua",
-    "/mage/spells/mage_spells.lua",
-    "/mage/spells/fire_spells.lua",
-    "/hunter/hunter.lua",
-    "/hunter/bm_actor.lua",
-    "/hunter/spells/bm_spells.lua",
+{
+    "load": [
+        "/awful.lua",
+        "/mage/mage.lua",
+        "/mage/fire_actor.lua",
+        "/mage/spells/mage_spells.lua",
+        "/mage/spells/fire_spells.lua",
+        "/hunter/hunter.lua",
+        "/hunter/bm_actor.lua",
+        "/hunter/spells/bm_spells.lua",
+    ]
 }
 ```
 
