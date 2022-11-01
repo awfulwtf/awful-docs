@@ -101,3 +101,24 @@ local trap = awful.textureEscape(187650, 16, "0:2")
 awful.alert(trap .. " the healer!", 187650)
 print(trap .. " in the chat!")
 ```
+
+## Draw
+> awful.Draw
+Draws various things ingame - to be expanded with more examples.
+```lua
+local Draw = awful.Draw
+Draw(function(draw)
+    draw:SetWidth(number) -- Set the width of the draw, such as the width of a Line
+    draw:SetColor(r, g, b, a) -- Set the color of the draw, such as the color of a Line
+
+    draw:Line(x1, y1, z1, x2, y2, z2, maxDistance) -- Draw a line from xyz1 to xyz2, maxDistance being how many yards a line can be before it attaches a "new line" to the end of the previous line
+    draw:Circle(x, y, z, radius, steps) -- Draw a circle at xyz with a radius and steps, steps being how many lines are used to draw the circle
+    draw:Cylinder(x, y, z, radius, height) -- Draw a cylinder at xyz with a radius and height
+    draw:Arc(x, y, z, size, arc, rotation) -- Draw an arc at xyz with a size (i.e. length of the arc), arc being how many degrees the arc is, and rotation being the "facing direction" of the arc
+    draw:Rectangle(x, y, z, width, length, rotation) -- Draw a rectangle at xyz with a width, length, and rotation
+    draw:Outline(x, y, z, radius) -- Draw an outline at xyz with a radius, basically a thick circle
+    draw:FilledCircle(x, y, z, radius, steps) -- Draw a filled circle at xyz with a radius and steps
+    draw:Triangle(x, y, z, v1, v2, v3, cull, wireframe) -- Draw a triangle at xyz with vertices v1, v2, and v3, cull true/false backface culling, wireframe true/false wireframe around the triangle
+    draw:Texture(config, x, y, z, alphaA) -- Draw a texture at xyz with an alpha value, config being the texture path e.g. {texture = path, width = number, height = number}
+end)
+```
