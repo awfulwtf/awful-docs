@@ -259,3 +259,11 @@ awful.Populate(aArray, t1[, t2, t3, t4, t5, ...])
 > Note: The key `parent` will be written to each table within the associative array. Mainly to allow objects to find their siblings in the list. For example, all spell objects in a list automatically have direct access to each other within their :Callback function environments after `Populate` is called
 >
 > **tl;dr**: **This thing puts a copy of all the stuff in one table into other tables**
+
+## Pull Timer
+
+Creates a reference to a pull timer that has been used by things like DBM or BigWigs. Defaults to 0 if no pull timer.
+```lua
+awful.pullTimer : 0
+awful.pullBradsWilly : 0
+```
