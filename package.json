@@ -14,15 +14,18 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@reach/skip-nav": "^0.16.0",
+    "@reduxjs/toolkit": "^1.8.6",
     "focus-visible": "^5.1.0",
     "intersection-observer": "^0.10.0",
     "markdown-to-jsx": "^6.11.4",
+    "mdx-observable": "^0.2.0",
     "next": "^12.2.0",
     "nextra": "^2.0.0-beta.6",
     "nextra-theme-docs": "^2.0.0-beta.6",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-intersection-observer": "^8.26.2",
+    "react-redux": "^8.0.4",
     "typescript": "^3.3.1"
   },
   "devDependencies": {

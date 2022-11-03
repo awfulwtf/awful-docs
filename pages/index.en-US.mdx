@@ -1,47 +1,62 @@
 import Callout from 'nextra-theme-docs/callout'
 import Link from 'next/link'
-
-# Getting Started
+import project from './project'
+import { State, Observe } from 'mdx-observable'
 
 <Callout emoji="💡">
   This quick < 20 minute start-up guide should get you from zero to hero and have your own addon successfully performing a rotation.
 </Callout>
 
-# **Preparations**
+<State initialState={{ name: 'example' }}>
 
-## First, if you haven't... [download awful here](https://awful.wtf/download).
+### Prerequisites
 
-> **I highly recommend you download these AddOns.** They're invaluable tools that will save you a lot of time.
+First, if you haven't already: [download awful](https://awful.wtf/download).
 
-- [idTip](https://www.curseforge.com/wow/addons/idtip) - Displays spellIDs in spell/buff/debuff/item tooltips.
+**I highly recommend you get these AddOns.** They're invaluable tools that'll save you a lot of time.
 
-- [BugSack](https://www.curseforge.com/wow/addons/bugsack) - Stores Lua errors & their full debug stack to view later, instead of popping up on your screen in the middle of gaming.
+- [idTip](https://www.curseforge.com/wow/addons/idtip-community-fork) - Display spellIDs in spell, talent, aura, and item tooltips.
+
+- [BugSack](https://www.curseforge.com/wow/addons/bugsack) - Store Lua errors & their full debug stack to view later.
 
 - [BugGrabber](https://www.curseforge.com/wow/addons/bug-grabber) - Required dependency of BugSack.
 
-_If you don't already have a code editor, you'll need one. I recommend [VSCode](https://code.visualstudio.com/)._
+> _If you don't already have a code editor, you'll need one. I recommend [VSCode](https://code.visualstudio.com/)._
 
-## **Setting up your directory**
+### **Setting up your directory**
 
-- 1.) Once `awful` is installed in your unlocker folder, create/enter the `routines` folder [awful/**routines**]. This is where our project lives, and where **awful framework** will load it from.
+#### Enter your project's name as a variable:
 
-- 2.) Create a new folder within `routines` and name it whatever you'd like to name your project. Make it something epic. For this example, we're going to keep it nice and boring by calling it `example`.
+<Observe>
+  {({ setState, ...state }) => (
+    <input className='bg-slate-800 rounded-lg px-4 py-2 mt-5 text-white' value={state.name} onChange={(e) => { 
+        const v = e.target.value?.replace(/\s/g, '').replace(/[^a-zA-Z0-9]/g, '')
+        setState(s => ({ name: v })) } 
+    } />
+  )}
+</Observe>
 
-Anywhere I reference `example` in this guide, just go ahead and replace it with your project's name.
+e.g, `awful`, `awfulRoutines`, `awfulBot`, `MyProject`
+
+- Once awful is installed in your unlocker folder, create the awful/**routines** folder if it doesn't already exist.
+
+- Enter routines, and create your project folder: awful/routines/**<Observe>{({ setState, ...state }) => (<>{state.name}</>)}</Observe>**.
 
 #### Our project directory:
 
-> .../awful/routines/**example**
+> .../awful/routines/**<Observe>{({ setState, ...state }) => (<>{state.name}</>)}</Observe>**
 
 ## **Getting our code to load (bars)**
 
-Now, you can open the folder you made in whichever code editor you prefer. [VSCode](https://code.visualstudio.com/) is a great option if you're unsure.
+Now, open the folder you made in your preferred code editor. [VSCode](https://code.visualstudio.com/) is a great option if you're unsure.
 
-You'll need to **create a new .lua file**. Go ahead and **create it in your directory**, and **name it after your project**, like this: `example.lua`
+### First .lua file
 
-> awful/routines/example/**example.lua**
+You'll need to write some **Lua** to create awful scripts. Go ahead and create **<Observe>{({ setState, ...state }) => (<>{state.name}</>)}</Observe>.lua** in your directory.
 
-Nice! Now, we're going to write some stuff in there. Replace the `example` variable with your project name, but no spaces or special characters here. You're coding now, and variables don't support that kind of swag. My preferred naming convention is [camelCase](https://techterms.com/definition/camelcase)!
+> awful/routines/example/**<Observe>{({ setState, ...state }) => (<>{state.name}</>)}</Observe>.lua**
+
+Nice! Now, we're going to write some stuff in there!
 
 ```lua
 local Unlocker, awful, example = ...
@@ -420,3 +435,5 @@ end)
 #### I hope this has been helpful. Send any feedback my way! Alexei#1234 on Discord.
 
 ...Now, **click around through the stuff on the left** and explore the **power** of awful framework!!!
+
+</State>

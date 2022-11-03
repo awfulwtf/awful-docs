@@ -1,15 +1,20 @@
 import Callout from 'nextra-theme-docs/callout'
 import Link from 'next/link'
 
-# How it works
+## How it works
 
-## Load Order:
+### Load Order:
 
-- By default, awful will search through each folder in your project, and load each file found from root to tail directory. Keep reading for a much better way to define an explicit load order, which I recommend you do as soon as possible.
+- Defining an explicit load order is vital, and now mandatory for each awful project.
+- If you've encountered `No awful-config.json` or `Missing awful-config` errors, keep reading.
 
 ### Immersion:
 
-- On load, awful immerses your files in a bubble environment that contains most protected API unlocked and modified to be consistent between supported platforms. It also passes you [common namespaces](namespaces#common-namespaces) to make use of our API and establish your own.
+On load, awful immerses each file in an isolated bubble environment. Here are some things to note about it:
+
+> - Most protected API, by direct reference, is unlocked and/or modified to be consistent between all supported unlockers - default reads/writes are NOT from `_G (global)` environment.
+>
+> - Each file is passed [common namespaces](namespaces#common-namespaces) as varargs to make use of our API and establish your own.
 
 ## Understanding Load Order
 
@@ -17,7 +22,7 @@ import Link from 'next/link'
 
 - You should plan an appropriate order for your files to load based on **dependencies** and **dependents**.. Here is a quick example:
 
-### .../project/project.lua (Dependency)
+#### .../project/**project.lua** (Dependency)
 
 ```lua
 local unlocker, awful, project = ...
@@ -25,9 +30,9 @@ local unlocker, awful, project = ...
 project.print = function(str) print("(epicProject) >", str) end
 ```
 
-- The above file declares `project.print` as a function when first loaded to make prints from our project fancier!
+- This file **declares** `project.print` as a function when first loaded, setting up a function we can use to make prints from our project fancier!
 
-### .../project/mage/fire.lua (Dependent)
+#### .../project/mage/**fire.lua** (Dependent)
 
 ```lua
 local unlocker, awful, project = ...
@@ -43,37 +48,48 @@ if not fire.ready then return end
 project.print('Fire Mage Rotation Loaded')
 ```
 
-- The above file uses `project.print` to print an OnLoad message for their mage rotation, as long as the player is on a mage.
+- The above file **calls** `project.print`, the function we **declared** above, to print an OnLoad message for the mage rotation, as long as the player is on a mage. Note we declared and are accessing it through our [project's namespace](namespaces#project)
 
 ### Can you guess which one should load first?
 
-#### ...In this example it's clearly `project.lua`, but with a huge project containing many more files, it could become a much harder question to answer!
+In this example it's clearly `project.lua`, but with a huge project containing many more files, it could become a much harder question to answer!
 
 - We first have to **declare** the `project.print` function (as well as the mage table, our routine actor, etc.) before **using** them in `fire.lua` ... Now you have to consider this for **your own personal project**. Your variables, api, file structure, etc. will be unique to you, and the **sooner** you consider your explicit load order the **better**.
 
 ## Configuring Load Order
 
-### Create a load file
+### Creating `awful-config.json`
 
-> Within your base project directory ( awful/routines/**project** ) folder, you need to create a file named **awful-config.json**. You can assign a load order manually within this file. It must have the **.json** extension or it will not be recognized.
+> Within your project's base directory ( awful/routines/**project** ), create a file named `awful-config.json`. You can assign a load order within this file. It must have either the `.json` or `.jsonc` extension, or it will not be recognized.
 
-- The base directory is your routine folder. The load order is from top to bottom. Here is an example of the contents of a `load.lua` file
+- The base directory is your project's base folder, ( awful/routines/**project** ). The load order is from top to bottom. Here is an example of the contents of a basic `awful-config` file
 
-```lua
+```json
 {
     "load": [
-        "/awful.lua",
-        "/mage/mage.lua",
-        "/mage/fire_actor.lua",
-        "/mage/spells/mage_spells.lua",
-        "/mage/spells/fire_spells.lua",
-        "/hunter/hunter.lua",
-        "/hunter/bm_actor.lua",
-        "/hunter/spells/bm_spells.lua",
+        "awful.lua",
+        "spells/mage/mage.lua",
+        "spells/mage/fire.lua",
+        "actors/mage/fire.lua",
     ]
 }
 ```
 
 > Now the listed files will be loaded from top-bottom.
 >
-> ⚠️ Important: **This completely replaces the old method of file loading. If you don't list a file here, it won't be loaded by Awful.**
+> ⚠️ Important: **If you don't list a file in your load order, it won't be loaded by Awful.** Remember to always come back and add new files to your load order when you create them.
+
+### Cleaning it up
+
+- First, any file being loaded by awful will be of the `.lua` extension. You can omit these redundant file extensions from your awful-config if you want. Leading/traililng slashes will also be ignored.
+
+```json
+{
+     "load": [
+        "awful",
+        "spells/mage/mage",
+        "spells/mage/fire",
+        "actors/mage/fire",
+    ]
+}
+```
