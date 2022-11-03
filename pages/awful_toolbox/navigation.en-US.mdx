@@ -1,0 +1,60 @@
+import Callout from 'nextra-theme-docs/callout'
+import Link from 'next/link'
+
+### **awful.path**
+
+- Returns an [awful path](navigation#path)
+
+> Create path from player to target
+
+```lua
+local player, target = awful.player, awful.target
+
+-- path from player to target
+local path = awful.path(player, target)
+
+-- simplify path
+path = path.simplify()
+
+-- iterate path
+path.loop(function(p)
+  local x,y,z = p.x, p.y, p.z
+
+  -- do stuff with point in path
+
+  -- break loop by returning true
+  return true
+end)
+```
+
+> Path between player and coords, plus some other methods of path
+
+```lua
+awful.onTick(function()
+  local path = awful.path(player, x, y, z)
+  -- simplify path, both args (tolerance, highestQuality) optional
+  path = path.simplify(1, 1)
+  -- draw line between each point in the path
+  path.draw()
+  -- follow the path (moves your character along the path)
+  path.follow()
+end)
+```
+
+### path object
+
+- path object is first return of `awful.path`
+- an array of nodes `{ x = 1093.3312, y = 1996.940, z = 92.01355 }`
+- contains some built in methods for manipulating and interacting with the path
+- unlocker agnostic, should work nearly the same with any unlocker supported
+
+```lua
+-- returns the path simplified with Douglas Peucker path simplification algorithm
+path.simplify(tolerance, highestQuality)
+
+-- draws the path for this tick
+path.draw()
+
+-- follow the path, moving your character along it each time called
+path.follow()
+```
