@@ -119,6 +119,7 @@ Draw(function(draw)
     draw:Outline(x, y, z, radius) -- Draw an outline at xyz with a radius, basically a thick circle
     draw:FilledCircle(x, y, z, radius, steps) -- Draw a filled circle at xyz with a radius and steps
     draw:Triangle(x, y, z, v1, v2, v3, cull, wireframe) -- Draw a triangle at xyz with vertices v1, v2, and v3, cull true/false backface culling, wireframe true/false wireframe around the triangle
+    draw:Text(string, font, x, y, z) -- Draw a string of text using the defined font on the provided coordinates. You can reference the awful font by creating it outside of this function as a local, e.g. local AwfulFont = awful.createFont(10, "OUTLINE")
     draw:Texture(config, x, y, z, alphaA) -- Draw a texture at xyz with an alpha value, config being the texture path e.g. {texture = path, width = number, height = number}
 end)
 ```
