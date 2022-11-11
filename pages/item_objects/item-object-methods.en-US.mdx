@@ -1,0 +1,70 @@
+import Callout from 'nextra-theme-docs/callout'
+import Link from 'next/link'
+
+# What are they
+
+Item Objects contain some very useful methods (object-oriented functions) that allow you to use the underlying Item in many different ways, simple and complex. They also contain methods that help organize and structure your code by item in some super neat ways.
+
+## Quick example
+
+- `:Use`, `:Update`, and `:Usable` are all methods used below
+
+```lua
+local healthstone = awful.NewItem(5512)
+
+
+-- use method
+if healthstone:Use() then awful.alert("Using Healthstone!") end
+
+-- some update methods
+healthstone:Update(function(item)
+  if not item:Usable then return end
+  if player.hp < 50 then
+    return item:Use() and alert("Used Healthstone!")
+  end
+end)
+
+healthstone() -- invoking that update function, will use Healthstone below 50% HP when usable
+```
+
+# Methods
+
+# Casting Methods
+
+## Use
+
+> Checks if the spell is usable, then attempts to use it. Returns true if use attempted.
+
+```lua
+item:Use(unit) -- params are optional
+```
+
+## Usable
+
+> Returns true if the item is usable on given unit.
+
+```lua
+item:Usable(unit) -- params are optional
+```
+
+## UseAoE
+
+> Uses an AoE item at given object or coords
+
+```lua
+-- accepts 3d coords
+spell:UseAoE(x,y,z)
+
+-- or awful object
+spell:UseAoE(unit)
+```
+
+- Uses directly at the coords [of the unit] given
+- Generally makes no modifications to the coords or anything, just does a direct cast -> click operation as smoothly as possible.
+  - Some exceptions rarely apply when passing awful object, like minor bug fixes baked in for some weirdly positioned PvE bosses
+
+```lua
+if resonator:UseAoE(target) then
+  alert("nice!")
+end
+```

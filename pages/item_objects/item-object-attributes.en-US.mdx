@@ -1,0 +1,103 @@
+import Callout from 'nextra-theme-docs/callout'
+import Link from 'next/link'
+
+# What are they?
+> They function the same as [awful object attributes](object-attributes), so it's worth reading up on those if you haven't.
+>
+> Item Objects have many attributes of their own though, usually relating to some **information about the item**, most of which is derived from the **Item ID** using WoW API, which is why you must provide it instead of a item name. Here are some examples of item attributes:
+>
+> **item.cd** - Current cooldown of the item
+>
+> **item.name** - Name of the item
+>
+> **item.range** - Max range of the item
+>
+> Simple and effective :)
+
+# Item Attributes
+
+## castTime
+
+> The cast time of the item (0 for instant cast items)
+
+```lua
+if target.magicImmunityRemains < item.castTime then
+  item:Cast(target)
+end
+```
+
+## cd
+
+> Current cooldown of the item
+
+- `cooldown` is another valid key for the same attribute
+
+```lua
+if item.cd > 10 then
+  print("dang it, gonna be a while before i can use this one")
+end
+```
+
+## id
+
+> The ItemID of the item. You provided it we're just giving it back.
+
+## equipped
+
+> Whether or not we have the item equipped, which can be surprisingly annoying to find out.
+
+```lua
+if not item.equipped then
+  print("check your bags, did you forget to equip your weapon again homie?")
+end
+```
+
+## numequipped
+
+> How many of the provided items you have equipped, such as tier pieces.
+
+```lua
+local tierPieces = NewItem({1234, 5678, 9012, 3456})
+if item.numequipped < 2 then
+  print("you don't even have 2-set, what are you doing?")
+end
+```
+
+## count
+
+> How many of the item we have, such as amount of Health Potions
+
+```lua
+if item.count < 10 then
+  print("better hit the auction house, you're running low on pots!")
+end
+```
+
+## name
+
+> The proper name of the item
+
+```lua
+awful.alert(item.name)
+```
+
+## range
+
+> The max range the item can be cast at
+
+```lua
+if target.dist < item.range then
+  awful.alert('hallelujah')
+end
+```
+
+## usable
+
+> Whether or not the item is currently "usable"
+
+```lua
+if item.usable then
+  item:Use()
+end
+```
+
