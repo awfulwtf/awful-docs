@@ -1,0 +1,51 @@
+import Callout from 'nextra-theme-docs/callout'
+import Link from 'next/link'
+
+# What are they?
+
+> They are another special type of **awful object**, which provide a powerful, customized, object-oriented set of tools **for each item** your routine will be using.
+>
+> You create them by providing a item ID.
+
+## Making them
+
+### awful.NewItem
+
+```lua
+awful.NewItem(itemID) -> Item Object
+```
+
+### Example
+
+```lua
+local healthstone = awful.NewItem(5512)
+```
+
+Now `healthstone` contains all attributes, methods, and functions of a **item object**. We can use it to gather all kinds of information about Healthstone, as well as actually use it and set up various conditions for using it. Most relevant information about the item is gathered from WoW's API by the item object, and presented in the form of **attributes**.
+
+## More about them
+
+### Benefits of Item Objects
+
+> Many complex calculations and actions are handled effortlessly by **Item Objects**. Healthstone is a super basic example, but the `:Use` method of `healthstone` will already make sure the item is off cooldown, we have it equipped or in our bags and more before using it.
+>
+> Item objects allow you to modularize code related to the item into neat little packages within itself. It makes for a fantastic organization method (code related to each item is within its own item object - your actor becomes an easy to digest item-related stack of priorities, as routines should be!), and a major performance benefit (code related to items only runs when the underlying item is ready to be cast)!
+
+## Populating the Actor
+
+> You can use **[awful.Populate](toolbox-general?id=Populate)** to make a list of item objects available to your routine actor and the scope of your SpellBook file.
+>
+> ```lua
+> local actor = project.hunter.survival
+> local items = {
+>   healthstone = awful.NewItem(5512),
+> }
+> -- populate actor and scope of this file
+> awful.Populate(items, actor, getfenv(1))
+> ```
+>
+> It's important to use Populate if you want to access your item objects without creating additional local references to them or storing and grabbing them from tables.
+>
+> [Read more about populate here](toolbox-general?id=Populate)
+
+### [Item Object Methods](item-object-methods)
