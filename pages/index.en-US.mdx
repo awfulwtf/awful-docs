@@ -156,7 +156,7 @@ end)
 
 #### .../example/ClassName/spells/**SpecName.lua**
 
-- We're calling this file our **spell book** because it will contain a list of our spells as **spell objects**, created with `awful.NewSpell`
+- We're calling this file our **spell book** because it will contain a list of our spells as **spell objects**, created with `awful.Spell`
 
 Be sure to replace all instances of **"example"** with your project name, **"warrior"** with your class name, and **"arms"** with your spec name. Also, you're gonna need to acquire the **spell IDs** for the spells you want it to use.
 
@@ -166,13 +166,13 @@ Be sure to replace all instances of **"example"** with your project name, **"war
 local Unlocker, awful, example = ...
 local arms = example.warrior.arms
 
-local NewSpell = awful.NewSpell
+local Spell = awful.Spell
 awful.Populate({
-    execute = NewSpell(163201),
-    slam = NewSpell(1464),
-    mortalStrike = NewSpell(12294),
-    overpower = NewSpell(7384),
-    warbreaker = NewSpell(262161), -- <-- don't forget the comma here when you add more spells, this is a table!
+    execute = Spell(163201),
+    slam = Spell(1464),
+    mortalStrike = Spell(12294),
+    overpower = Spell(7384),
+    warbreaker = Spell(262161), -- <-- don't forget the comma here when you add more spells, this is a table!
 }, arms, getfenv(1))
 -- ^^^ make sure you replace "arms" here with your specialization's routine actor!
 ```
@@ -189,13 +189,13 @@ Now, we'll initialize some **callbacks** for all of these spells. Prepare for so
 local Unlocker, awful, example = ...
 local arms = example.warrior.arms
 
-local NewSpell = awful.NewSpell
+local Spell = awful.Spell
 awful.Populate({
-    execute = NewSpell(163201),
-    slam = NewSpell(1464),
-    mortalStrike = NewSpell(12294),
-    overpower = NewSpell(7384),
-    warbreaker = NewSpell(262161),
+    execute = Spell(163201),
+    slam = Spell(1464),
+    mortalStrike = Spell(12294),
+    overpower = Spell(7384),
+    warbreaker = Spell(262161),
 }, arms, getfenv(1))
 
 execute:Callback(function(spell)
@@ -286,18 +286,18 @@ Before we wrap things up, let's clean this routine up just a bit... We're going 
 local Unlocker, awful, example = ...
 local arms = example.warrior.arms
 
-local NewSpell = awful.NewSpell
+local Spell = awful.Spell
 awful.Populate({
-    execute = NewSpell(163201, { damage = "physical" }),
-    slam = NewSpell(1464, { damage = "physical" }),
-    mortalStrike = NewSpell(12294, { damage = "physical" }),
-    overpower = NewSpell(7384, { damage = "physical" }),
-    warbreaker = NewSpell(262161, { damage = "physical", facingNotRequired = true }),
-    rend = NewSpell(772, { damage = "physical", bleed = true }),
-    sweepingStrikes = NewSpell(260708),
-    charge = NewSpell(100),
-    leap = NewSpell(6544),
-    avatar = NewSpell(107574),
+    execute = Spell(163201, { damage = "physical" }),
+    slam = Spell(1464, { damage = "physical" }),
+    mortalStrike = Spell(12294, { damage = "physical" }),
+    overpower = Spell(7384, { damage = "physical" }),
+    warbreaker = Spell(262161, { damage = "physical", facingNotRequired = true }),
+    rend = Spell(772, { damage = "physical", bleed = true }),
+    sweepingStrikes = Spell(260708),
+    charge = Spell(100),
+    leap = Spell(6544),
+    avatar = Spell(107574),
 }, arms, getfenv(1))
 
 charge:Callback("gapclose", function(spell)

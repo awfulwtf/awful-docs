@@ -9,16 +9,16 @@ import Link from 'next/link'
 
 ## Making them
 
-### awful.NewSpell
+### awful.Spell
 
 ```lua
-awful.NewSpell(spellID, traits) -> Spell Object
+awful.Spell(spellID, traits) -> Spell Object
 ```
 
 ### Example
 
 ```lua
-local mortalStrike = awful.NewSpell(12294, {damage = "physical"})
+local mortalStrike = awful.Spell(12294, {damage = "physical"})
 ```
 
 Now `mortalStrike` contains all attributes, methods, and functions of a **spell object**. We can use it to gather all kinds of information about Mortal Strike, as well as actually cast it and set up various conditions for casting it. Most relevant information about the spell is gathered from WoW's API by the spell object, and presented in the form of **attributes**. We also told it that it's a physical damage ability - so it will make no mistake about which immunities to avoid attacking into.
@@ -33,13 +33,13 @@ Now `mortalStrike` contains all attributes, methods, and functions of a **spell 
 >
 > ```lua
 > -- may as well have it cancel channels too, if we're trying to cast it
-> iceBlock = awful.NewSpell(123, {ignoreControl = true, ignoreChanneling = true})
+> iceBlock = awful.Spell(123, {ignoreControl = true, ignoreChanneling = true})
 > ```
 >
 > Same for moving and casting, while it does understand you can cast with things like Spiritwalker's Grace or Ice Floes - some spells can always be cast while moving, like scorch or steady shot.
 >
 > ```lua
-> scorch = awful.NewSpell(123, {ignoreMoving = true})
+> scorch = awful.Spell(123, {ignoreMoving = true})
 > ```
 
 ### Benefits of Spell Objects
@@ -57,8 +57,8 @@ Now `mortalStrike` contains all attributes, methods, and functions of a **spell 
 > ```lua
 > local actor = project.hunter.survival
 > local spells = {
->   exhilaration = awful.NewSpell(1234, {heal = true}),
->   intimidation = awful.NewSpell(12345, {effect = "physical", stun = true}),
+>   exhilaration = awful.Spell(1234, {heal = true}),
+>   intimidation = awful.Spell(12345, {effect = "physical", stun = true}),
 >   trap = project.hunter.trap, -- grabbing this from hunter file!
 > }
 > -- populate actor and scope of this file
@@ -72,7 +72,7 @@ Now `mortalStrike` contains all attributes, methods, and functions of a **spell 
 ## Raw Spell List Example
 
 ```lua
-local NS = awful.NewSpell
+local Spell = awful.Spell
 awful.Populate({
 
   -- static objects [not req. but tiny perf. increase and takes care of declaration where i use them]
@@ -84,40 +84,40 @@ awful.Populate({
   enemyHealer = awful.enemyHealer,
 
   -- dmg
-  kill = NS(53351, { damage = "physical", ranged = true, targeted = true }),
-  barbed = NS(217200, { damage = "physical", ranged = true, targeted = true }),
-  cobra = NS(193455, { damage = "physical", ranged = true, targeted = true }),
-  flayed = NS(324149, { damage = "physical", ranged = true, targeted = true, bleed = true }),
-  killCommand = NS(34026, { damage = "physical", targeted = true }),
-  conc = NS(5116, { effect = "physical", ranged = true, targeted = true, slow = true }),
+  kill = Spell(53351, { damage = "physical", ranged = true, targeted = true }),
+  barbed = Spell(217200, { damage = "physical", ranged = true, targeted = true }),
+  cobra = Spell(193455, { damage = "physical", ranged = true, targeted = true }),
+  flayed = Spell(324149, { damage = "physical", ranged = true, targeted = true, bleed = true }),
+  killCommand = Spell(34026, { damage = "physical", targeted = true }),
+  conc = Spell(5116, { effect = "physical", ranged = true, targeted = true, slow = true }),
 
   -- cc
   trap = hunter.trap,
-  tar = NS(187698, { effect = "magic", slow = true }),
-  cs = NS(147362, { effect = "physical" }),
+  tar = Spell(187698, { effect = "magic", slow = true }),
+  cs = Spell(147362, { effect = "physical" }),
 
   -- offensive
-  wrath = NS(19574),
-  wild = NS(193530),
-  tranq = NS(19801),
-  bassy = NS(205691, { damage = "physical", targeted = true }),
+  wrath = Spell(19574),
+  wild = Spell(193530),
+  tranq = Spell(19801),
+  bassy = Spell(205691, { damage = "physical", targeted = true }),
 
   -- defensive
   feign = hunter.feign,
-  freedom = NS(53271, { ignoreFacing = true, ignoreLoS = true, beneficial = true }),
-  turtle = NS(186265),
+  freedom = Spell(53271, { ignoreFacing = true, ignoreLoS = true, beneficial = true }),
+  turtle = Spell(186265),
 
   -- misc
-  flare = NS(1543),
-  mendPet = NS(136, { heal = true }),
+  flare = Spell(1543),
+  mendPet = Spell(136, { heal = true }),
   camo = hunter.camo,
   ros = hunter.ros,
   disengage = hunter.disengage,
   racials = {
     -- blood fury
-    Orc = NS(20572),
+    Orc = Spell(20572),
     -- berserking
-    Troll = NS(26297),
+    Troll = Spell(26297),
   },
 
 }, bm, getfenv(1))

@@ -17,7 +17,7 @@ import Link from 'next/link'
 
 ```lua
 -- creating new spell object
-local mortalStrike = awful.NewSpell(1234, { damage = "physical" })
+local mortalStrike = awful.Spell(1234, { damage = "physical" })
 
 -- can use methods on it, like :Callback
 mortalStrike:Callback(function(spell)

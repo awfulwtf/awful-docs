@@ -300,7 +300,7 @@ end
 
 ```lua
 -- print spec when spec changes
-awful.addEventCallback(function() print(player.spec) end, "PLAYER_SPECIALIZATION_CHANGED")
+awful.onEvent(function() print(player.spec) end, "PLAYER_SPECIALIZATION_CHANGED")
 
 if player.spec == "Fire" then
     -- do fire stuff

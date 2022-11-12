@@ -3,25 +3,25 @@ import Link from 'next/link'
 
 # Setting Traits
 
-Traits, the 2nd parameter of `awful.NewSpell` allows you to set a list of traits about the spell which affect how it is used.. It expects an associative array in which you can set multiple traits, just make sure they correctly apply to your spell.
+Traits, the 2nd parameter of `awful.Spell` allows you to set a list of traits about the spell which affect how it is used.. It expects an associative array in which you can set multiple traits, just make sure they correctly apply to your spell.
 
 ```lua
 -- @param {number} spellID, spell ID of the spell to create the object for
 -- @param {associative array} traits, list of traits for the spell object
-awful.NewSpell(spellID, traits)
+awful.Spell(spellID, traits)
 ```
 
 ## Some examples:
 
 ```lua
 -- magic targeted spell, knows not to use into grounding or spell reflect among other magic immunities
-awful.NewSpell(1234, { damage = "magic", targeted = true })
+awful.Spell(1234, { damage = "magic", targeted = true })
 
 -- physical slow spell, windwalker monk "Disable" for example.. knows it can use it as long as they're not immune to physical or slow effects.. for example - physical damage can't be used into Nether Walk, but a physical effect can, so they can be disabled - but if they get freedom or blessing of protection, nope.
-awful.NewSpell(123, { effect = "physical", slow = true })
+awful.Spell(123, { effect = "physical", slow = true })
 
 -- magic effect, like "Spellsteal" - again can be used into something like netherwalk, but it's bad to send pyroblasts into it! that's the diff between effect and damage.
-awful.NewSpell(13131, { effect = "magic", targeted = true })
+awful.Spell(13131, { effect = "magic", targeted = true })
 ```
 
 # List of Traits

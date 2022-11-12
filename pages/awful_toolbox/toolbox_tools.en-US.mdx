@@ -125,23 +125,55 @@ awful.powerTypes = {
 
 # **awesome functions**
 
-## addUpdateCallback
+## onTick
 
 Adds a callback function to the main framework ticker. These are called in the order added, just before the routine actor.
 
 ```lua
-awful.addUpdateCallback(callback[,enabled])
+awful.onTick(callback[,enabled])
 ```
 
 ```lua
 -- only running while routine is enabled
-awful.addUpdateCallback(function()
+awful.onTick(function()
     print("This is being called a lot, but only while my routine is on!")
 end, true)
 
 -- running every tick, all the time
-awful.addUpdateCallback(function()
+awful.onTick(function()
     print("This is being called a lot, all the time!")
+end)
+```
+
+## onUpdate
+
+Does the same thing as `onTick`, but runs every frame instead (almost always faster).
+
+```lua
+awful.onUpdate(callback[,enabled])
+```
+
+## onEvent
+
+Assign a callback to a combat log or other event firing.
+
+```lua
+-- passing it a specific event type will create a frame, register that frame for the event, and assign it your callback as an OnEvent handler
+local function printSpec()
+	print(awful.player.spec)
+end
+awful.onEvent(printSpec, "PLAYER_SPECIALIZATION_CHANGED")
+
+-- if a specific event type is not passed, it will fire on combat log events,
+-- passing event info, type, as well as source (and dest if applicable) units as awful objects.
+awful.onEvent(function(info, event, source, dest)
+  local time = GetTime()
+	if event == "SPELL_CAST_SUCCESS" then
+		-- combat log event info is passed as a table, and can be unpacked like so
+		-- this is starting at the 12th entry of SPELL_CAST_SUCCESS, which is the spellID
+		local spellID, spellName = select(12, unpack(info))
+		print(time, spellID, spellName, source.name, source.class, dest.name)
+	end
 end)
 ```
 
@@ -233,8 +265,8 @@ awful.Populate(aArray, t1[, t2, t3, t4, t5, ...])
 >
 > ```lua
 > local list = {
->    healingTouch = NewSpell(1234),
->    mightyBash = NewSpell(12345),
+>    healingTouch = Spell(1234),
+>    mightyBash = Spell(12345),
 >    ...
 > }
 > ```
@@ -263,6 +295,7 @@ awful.Populate(aArray, t1[, t2, t3, t4, t5, ...])
 ## Pull Timer
 
 Creates a reference to a pull timer that has been used by things like DBM or BigWigs. Defaults to 0 if no pull timer.
+
 ```lua
 awful.pullTimer : 0
 awful.pullBradsWilly : 0

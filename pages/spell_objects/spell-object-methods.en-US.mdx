@@ -10,8 +10,8 @@ Spell Objects contain some very useful methods (object-oriented functions) that 
 - `:Cast`, `:Callback`, and `:Castable` are all methods used below
 
 ```lua
-local mortalStrike = awful.NewSpell(12294, { damage = "physical" })
-local sharpen = awful.NewSpell(198817)
+local mortalStrike = awful.Spell(12294, { damage = "physical" })
+local sharpen = awful.Spell(198817)
 
 -- cast method
 if mortalStrike:Cast(target) then awful.alert("Mortal strike!", mortalStrike.id) end
@@ -319,7 +319,7 @@ spell:SmartAoE({x, y, z}, options)
         local dist = awful.Distance
 
         -- ursol spell object
-        ursol = NewSpell(102793, {
+        ursol = Spell(102793, {
           effect = "magic",
           slow = true,
           diameter = 8
@@ -375,7 +375,7 @@ spell:SmartAoE({x, y, z}, options)
 
 ```lua
 -- ring of frost, perfectly edged on the target, and automagically casted around pillars!
-local rof = awful.NewSpell(113724, {
+local rof = awful.Spell(113724, {
   effect = 'magic',
   cc = true,
   diameter = 12,
@@ -385,7 +385,7 @@ local rof = awful.NewSpell(113724, {
 ringOfFrost:SmartAoE(focus)
 
 -- mass dispel sheep around a corner!
-local massDispel = awful.NewSpell(327830, {
+local massDispel = awful.Spell(327830, {
   diameter = 30
 })
 massDispel:Callback('sheepy', function(spell)

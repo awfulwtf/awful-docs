@@ -9,16 +9,16 @@ import Link from 'next/link'
 
 ## Making them
 
-### awful.NewItem
+### awful.Item
 
 ```lua
-awful.NewItem(itemID) -> Item Object
+awful.Item(itemID) -> Item Object
 ```
 
 ### Example
 
 ```lua
-local healthstone = awful.NewItem(5512)
+local healthstone = awful.Item(5512)
 ```
 
 Now `healthstone` contains all attributes, methods, and functions of a **item object**. We can use it to gather all kinds of information about Healthstone, as well as actually use it and set up various conditions for using it. Most relevant information about the item is gathered from WoW's API by the item object, and presented in the form of **attributes**.
@@ -38,7 +38,7 @@ Now `healthstone` contains all attributes, methods, and functions of a **item ob
 > ```lua
 > local actor = project.hunter.survival
 > local items = {
->   healthstone = awful.NewItem(5512),
+>   healthstone = awful.Item(5512),
 > }
 > -- populate actor and scope of this file
 > awful.Populate(items, actor, getfenv(1))

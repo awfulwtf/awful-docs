@@ -9,16 +9,16 @@ import Link from 'next/link'
 
 ## Making them
 
-### awful.NewSpell
+### awful.Spell
 
 ```lua
-awful.NewSpell(spellID, traits) -> Spell Object
+awful.Spell(spellID, traits) -> Spell Object
 ```
 
 ### Example
 
 ```lua
-local mortalStrike = awful.NewSpell(12294, {damage = "physical"})
+local mortalStrike = awful.Spell(12294, {damage = "physical"})
 ```
 
 Now `mortalStrike` contains all attributes, methods, and functions of a **spell object**. We can use it to gather all kinds of information about Mortal Strike, as well as actually cast it and set up various conditions for casting it. Most relevant information about the spell is gathered from WoW's API by the spell object, and presented in the form of **attributes**. We also told it that it's a physical damage ability - so it will make no mistake about which immunities to avoid attacking into.
@@ -33,13 +33,13 @@ Now `mortalStrike` contains all attributes, methods, and functions of a **spell 
 >
 > ```lua
 > -- may as well have it cancel channels too, if we're trying to cast it
-> iceBlock = awful.NewSpell(123, {ignoreControl = true, ignoreChanneling = true})
+> iceBlock = awful.Spell(123, {ignoreControl = true, ignoreChanneling = true})
 > ```
 >
 > Same for moving and casting, while it does understand you can cast with things like Spiritwalker's Grace or Ice Floes - some spells can always be cast while moving, like scorch or steady shot.
 >
 > ```lua
-> scorch = awful.NewSpell(123, {ignoreMoving = true})
+> scorch = awful.Spell(123, {ignoreMoving = true})
 > ```
 
 ### Benefits of Spell Objects
@@ -57,8 +57,8 @@ Now `mortalStrike` contains all attributes, methods, and functions of a **spell 
 > ```lua
 > local actor = project.hunter.survival
 > local spells = {
->   exhilaration = awful.NewSpell(1234, {heal = true}),
->   intimidation = awful.NewSpell(12345, {effect = "physical", stun = true}),
+>   exhilaration = awful.Spell(1234, {heal = true}),
+>   intimidation = awful.Spell(12345, {effect = "physical", stun = true}),
 >   trap = project.hunter.trap, -- grabbing this from hunter file!
 > }
 > -- populate actor and scope of this file
@@ -72,7 +72,7 @@ Now `mortalStrike` contains all attributes, methods, and functions of a **spell 
 ## Raw Spell List Example
 
 ```lua
-local NS = awful.NewSpell
+local NS = awful.Spell
 awful.Populate({
 
   -- static objects [not req. but tiny perf. increase and takes care of declaration where i use them]
