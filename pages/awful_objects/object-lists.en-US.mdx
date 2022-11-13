@@ -58,6 +58,7 @@ Contains enemy units that are relevant to the player's current environment.
 - **PvE / Open World:** Enemy **units** that are in combat, or enemy **players** that are targeting or attacking the player.
 
 - **Table Population:** In regard to the enemy table being populated. Keep in mind that unless explicitly stated otherwise, special mobs like Shades, and other things will be included in the enemies table.
+- **Excluded from enemies:** Explosives, can be found in awful.explosives.
 
 ```lua
 -- basic corruption maintenance on enemies
@@ -136,7 +137,7 @@ end)
 
 ## explosives
 
-Contains M+ affix explosive objects
+Contains M+ affix explosive objects, doesn't appear in awful.enemies.
 
 ```lua
 someSpell:Callback("kill explosives", function(spell)
@@ -214,7 +215,7 @@ Contains all objects of type **ActivePlayer**, both friendly and enemy.
 
 ## allEnemies
 
-Contains all enemy units/players regardless of their combat status
+Contains all enemy units/players regardless of their combat status, excluding Charmed enemies such as Mindcontrolled group members.
 
 ```lua
 -- check if we're gonna end up pulling any mobs with our aoe before casting it
