@@ -1,4 +1,6 @@
 {
     "toolbox_tools": "General Tools",
-    "toolbox_alerts_visuals": "Alerts & Visuals"
+    "toolbox_alerts_visuals": "Alerts & Visuals",
+    "toolbox_nav": "Navigation",
+    "config": "Config"
 }
