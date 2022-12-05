@@ -1,0 +1,79 @@
+import Callout from 'nextra-theme-docs/callout'
+import Link from 'next/link'
+
+## Awful Config
+
+Some users may wish to store certain things in between reloads or per character. This can be accomplished by using the `awful.config` method.
+
+A basic example to save any type of data:
+
+```lua
+local Unlocker, awful, projectName = ...
+
+-- create the config file within awful
+local config = awful.NewConfig("projectName")
+
+-- use that config file globally
+projectName.config = config
+
+-- in another file you can use, or add to the config
+local config = projectName.config
+
+-- such as storing a position for a widget frame you create
+config.savedPos = {
+    point = "CENTER",
+    x = 0,
+    y = 0,
+}
+
+```
+
+For example if you'd like to store config options per character this is what you would do:
+
+```lua
+local Unlocker, awful, projectName = ...
+
+local name, realm = UnitFullName("player")
+local config = awful.NewConfig('project' .. name .. realm)
+
+config.savedVar = true
+config.nextSavedVar = 123
+config.savedTable = { 
+    -- Store integers
+    [1] = 123,
+    -- Store a string
+    [2] = 'abc',
+    -- Store functions
+    [3] = function() print('hello world') )
+}
+
+```
+
+## Triggering a Save
+
+Any shallow write to the config will trigger a config save, for example:
+
+```lua
+
+-- config.savedVar value is updated and saved to persist through reloads and restarts
+config.savedVar = true
+
+-- config.newSavedTable is updated and saved to persist
+config.newSavedTable = { 'a', 'b' }
+
+-- config.newSavedTable is updated for the current session, but is NOT saved and will not persist
+table.insert(config.newSavedTable, 'c')
+
+-- you must do a shallow write to the config table to save and persist
+local function insertSubConfigValue(key, value)
+    -- nested write
+    tinsert(config[key], value)
+
+    -- shallow write saves and persists
+    config[key] = config[key]
+end
+
+-- saves and persists
+insertSubConfigValue("newSavedTable", 'c')
+
+```
