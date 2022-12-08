@@ -36,16 +36,27 @@ local Unlocker, awful, projectName = ...
 local name, realm = UnitFullName("player")
 local config = awful.NewConfig('project' .. name .. realm)
 
-config.savedVar = true
-config.nextSavedVar = 123
-config.savedTable = { 
-    -- Store integers
-    [1] = 123,
-    -- Store a string
-    [2] = 'abc',
-    -- Store functions
-    [3] = function() print('hello world') )
+-- any primitive type or table containing primitive types can be persisted in config
+config.savedBool = true
+config.savedInt = 123
+config.savedArray = { 
+    123,
+    'abc',
+    true,
+    false
 }
+config.savedAssociativeArray = {
+    cats = "cool",
+    dogs = "drool" 
+}
+
+-- reference types like functions can technically be stored in
+-- a config table, but will not persist through reloads as
+-- the value behind it is just a temporary memory address
+config.savedFunction = function(...)
+    print('args:', ...)
+end
+-- this redeclaration is required on load for the function to retain its functionality
 
 ```
 
