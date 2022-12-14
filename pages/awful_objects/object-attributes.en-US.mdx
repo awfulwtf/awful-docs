@@ -355,6 +355,31 @@ if melee > 1 and cooldowns > 0 then
 end
 ```
 
+## threat
+
+The player's threat for the unit, based on UnitThreatSituation.
+https://wowpedia.fandom.com/wiki/API_UnitThreatSituation
+
+**`unit.threat : status | -1`**
+
+```lua
+if target.threat < 2 then
+    taunt:Cast()
+end
+```
+
+## aggro
+
+The player's aggro status for the unit, based on threat returning >= 2.
+
+**`unit.aggro : aggro | false`**
+
+```lua
+if not target.aggro then
+    taunt:Cast()
+end
+```
+
 # Buffs & Debuffs
 
 > There are also powerful [Buff & Debuff](/object-functions.md?id=buffs-amp-debuffs) related **functions**, rather than **attributes**... Be sure to check those out before beginning your implementation.
