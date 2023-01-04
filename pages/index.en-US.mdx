@@ -2,6 +2,8 @@ import Callout from 'nextra-theme-docs/callout'
 import Link from 'next/link'
 import project from '../data/project'
 import { State, Observe } from 'mdx-observable'
+import {compile} from '@mdx-js/mdx'
+import { Code } from '../components/Code'
 
 <Callout emoji="💡">
   This quick < 20 minute start-up guide should get you from zero to hero and have your own addon successfully performing a rotation.
@@ -11,21 +13,21 @@ import { State, Observe } from 'mdx-observable'
 
 ### Prerequisites
 
-First, if you haven't already: [download awful](https://awful.wtf/download).
+- If you haven't already, [download awful](https://awful.wtf/download).
 
-**I highly recommend you get these AddOns.** They're invaluable tools that'll save you a lot of time.
+- _If you don't already have a code editor, grab [VSCode](https://code.visualstudio.com/)._
 
-- [idTip](https://www.curseforge.com/wow/addons/idtip-community-fork) - Display spellIDs in spell, talent, aura, and item tooltips.
+- Get these AddOns; they're invaluable tools that'll save you a lot of time:
 
-- [BugSack](https://www.curseforge.com/wow/addons/bugsack) - Store Lua errors & their full debug stack to view later.
-
-- [BugGrabber](https://www.curseforge.com/wow/addons/bug-grabber) - Required dependency of BugSack.
-
-> _If you don't already have a code editor, you'll need one. I recommend [VSCode](https://code.visualstudio.com/)._
+> [idTip](https://www.curseforge.com/wow/addons/idtip-community-fork) - Displays IDs in spell, talent, aura, and item tooltips.
+>
+> [BugSack](https://www.curseforge.com/wow/addons/bugsack) - Stores Lua errors & their full debug stack to view later.
+>
+> [BugGrabber](https://www.curseforge.com/wow/addons/bug-grabber) - Required dependency of BugSack.
 
 ### **Setting up your directory**
 
-#### Enter your project's name as a variable:
+#### Gimme your project's name as a variable:
 
 <Observe>
   {({ setState, ...state }) => (
@@ -40,7 +42,7 @@ e.g, `awful`, `awfulRoutines`, `awfulBot`, `MyProject`
 
 - Once awful is installed in your unlocker folder, create the awful/**routines** folder if it doesn't already exist.
 
-- Enter routines, and create your project folder: awful/routines/**<Observe>{({ setState, ...state }) => (<>{state.name}</>)}</Observe>**.
+- Inside of `routines/`, create your project folder: awful/routines/**<Observe>{({ setState, ...state }) => (<>{state.name}</>)}</Observe>**.
 
 #### Our project directory:
 
@@ -54,17 +56,39 @@ Now, open the folder you made in your preferred code editor. [VSCode](https://co
 
 You'll need to write some **Lua** to create awful scripts. Go ahead and create **<Observe>{({ setState, ...state }) => (<>{state.name}</>)}</Observe>.lua** in your directory.
 
-> awful/routines/example/**<Observe>{({ setState, ...state }) => (<>{state.name}</>)}</Observe>.lua**
+> awful/routines/<Observe>{({ setState, ...state }) => (<>{state.name}</>)}</Observe>/**<Observe>{({ setState, ...state }) => (<>{state.name}</>)}</Observe>.lua**
 
 Nice! Now, we're going to write some stuff in there!
 
 ```lua
-local Unlocker, awful, example = ...
+local Unlocker, awful, project = ...
 
 awful.DevMode = true
 ```
 
-> With the first line, you just made a few **important namespaces** available to this file, including **your own project's**. You also enabled `awful.DevMode`, which will do a few neat things to make life as a dev easier.
+<Callout emoji="ℹ️" type="info">
+  This first line will be consistent throughout all files going forward, you're importing required **namespaces** into the file, including **your own project's**. You also enabled `awful.DevMode`, which will do a few neat things to make life as a dev easier.
+</Callout>
+
+> 
+
+### Now, we need an `awful-config.json`
+
+Your `awful-config.json` file tells awful which Lua files it should load, and in which order (which is important, more on that later). Any files that aren't explicitly defined here will not be loaded. It also unlocks some other cool goodies down the line with our CI/CD integrations. Go ahead and create `awful-config.json` in your directory.
+
+> awful/routines/<Observe>{({ setState, ...state }) => (<>{state.name}</>)}</Observe>/**awful-config.json**
+
+```json filename=awful-config.json 
+{
+    "load": [
+        "example.lua"
+    ]
+}
+```
+
+<Callout emoji="ℹ️" type="info">
+  The string `"example.lua"` in the `awful-config` load array refers to the **<Observe>{({ setState, ...state }) => (<>{state.name}</>)}</Observe>.lua** file you created earlier. Make sure it's actually set to the name of your file, in this case: **<Observe>{({ setState, ...state }) => (<>{state.name}</>)}</Observe>.lua**
+</Callout>
 
 ## **Hello world?**
 
@@ -78,73 +102,79 @@ Let's see if we're in. When you set `awful.DevMode` to `true`, the `awful` names
 
 ## **Setting up our routine**
 
-Now we're gonna make a **couple more files & directories**, and add a little more code to our **core file**. (for me, that's `example.lua`)
+Now we're gonna make a **couple more files & directories**, and some changes to our core file, **<Observe>{({ setState, ...state }) => (<>{state.name}</>)}</Observe>.lua**.
 
-This should only take a couple of minutes, and by the time you're done, you'll have a legit routine casting spells.
+This should only take a couple of minutes. By the time you're done, you'll have a legit routine casting spells.
 
-- Awful's auto-load will try to interpret common shorthand for class names, like **dh**, **dk**, **lock**, etc. If you use shorthand and hit a roadblock on the next step, try changing any shorthand to the full class name, like `warlock` or `DeathKnight` instead.
+### **Create a directory for your class:**
 
-### **Create these directories:**
+> <Observe>{({ setState, ...state }) => (<>{state.name}</>)}</Observe>/**warrior**
 
-> example/**ClassName**
+### **...and these files for your spec:**
 
-> example/ClassName/**spells**
+> <Observe>{({ setState, ...state }) => (<>{state.name}</>)}</Observe>/warrior/**arms-actor.lua**
 
-### **...and these files**
+> <Observe>{({ setState, ...state }) => (<>{state.name}</>)}</Observe>/warrior/**arms-spells.lua**
 
-> example/ClassName/**SpecName.lua**
+<Callout emoji="⚠️" type="warning">
+  _Make sure you include these files in your `awful-config.json` or they will not be loaded!_
+</Callout>
 
-> example/ClassName/spells/**SpecName.lua**
-
-- _Make sure you replace `ClassName` with your class name, and `SpecName` with your spec name._
+```json filename=awful-config.json 
+{
+    "load": [
+        "example.lua",
+        "warrior/arms-actor.lua",
+        "warrior/arms-spells.lua"
+    ]
+}
+```
 
 ## **Initializing the routine**
 
-### How do I tell awful framework I have a routine I want it to run with **/awful toggle**?
+First, we'll create a **routine actor** object. You can create one for each specialization, it gives awful something to run when toggled on the correct class and spec.
 
-1.) Create a **table** in your project's **namespace** named after your **class**. _(Shorthand still supported here!)_
+Then we'll use `actor:Init(callback, tickRate)` to assign it a function to run on each tick.
 
-2.) Create a **routine actor** in that **table**, named after our specialization, and tell it the **specialization index** and class we want it to run for.
+### What???
 
-### What??? How do I put a table in my namespace? Spec index???
+Don't stress the details, **you'll have working code in a sec**. Everything else is explained elsewhere in the docs.
 
-> Don't stress the details, **you'll have working code in a sec**. Everything else is explained elsewhere in the docs.
+> For this example, I'm making a basic **Arms Warrior** routine on a class trial. If you're feeling confident, I encourage you to try a **different class** or throw in some **extra spells & logic** to challenge yourself!
 
-- For this example, I'm making a basic **Arms Warrior** routine on a class trial. If you're feeling confident, I encourage you to try a **different class** or throw in some **extra spells & logic** to challenge yourself!
+Let's write some code lmao.
 
-#### Let's write some code.
+### **Core File**: .../<Observe>{({ setState, ...state }) => (<>{state.name}</>)}</Observe>/**<Observe>{({ setState, ...state }) => (<>{state.name}</>)}</Observe>.lua**
 
-### **Core File**: .../example/**example.lua**
+- First, we're going to create a **table** for our **class** inside our project's **namespace**. We're doing this in our **core file**, as we assigned it to be loaded first in our `awful-config`.
 
-- First, we're going to create a **table** for our **class** inside our project's **namespace**. We are doing this in our **core file**, as it will be loaded by awful first. Be sure to replace `example` and `warrior` with your project and class names respectively.
+- We'll also create our **routine actor** here, before initializing it in the actor file. Since we're playing **Arms**, our **specialization index** is `1`. Be sure to replace `1` in this file with the **correct spec index** and **"warrior"** with the correct class, if you're playing something else.
 
-- We will also create our **routine actor** here, before initializing it in the actor file. Since we're playing **Arms**, our **specialization index** is `1`. Be sure to replace `1` in this file with the **correct spec index** and **"warrior"** with the correct class. _(Shorthand is still supported here, y'all!)_
-
-> Your **specialization index** can be acquired from the same **dump command** we used in-game, like this: `/dump GetSpecialization()`, or you can just **count from top spec to bottom spec** in your **talents frame** under the **specialization tab** in-game.
+> Your **specialization index** can be acquired from the same **dump command** we used in-game, like this: `/dump GetSpecialization()`, or you can just **count from top to bottom, or left to right spec, depending on game version** in your **talents frame** under the **specialization tab** in-game.
 
 ```lua
-local Unlocker, awful, example = ...
+local Unlocker, awful, project = ...
 
 awful.DevMode = true
 
-example.warrior = {}
-example.warrior.arms = awful.Actor:New({ spec = 1, class = "warrior" })
+project.warrior = {}
+project.warrior.arms = awful.Actor:New({ spec = 1, class = "warrior" })
 ```
 
-### **Actor File**: .../example/ClassName/**SpecName.lua**
+### **Actor File**: .../<Observe>{({ setState, ...state }) => (<>{state.name}</>)}</Observe>/warrior/**arms-actor.lua**
 
 ```lua
-local Unlocker, awful, example = ...
-local arms = example.warrior.arms
+local Unlocker, awful, project = ...
+local arms = project.warrior.arms
 
 -- stuff out here only runs once, when the file is first loaded.
 print("Example warrior locked and loaded!")
 
--- this is the routine actor function.
+-- this is the routine actor.
 arms:Init(function()
-    -- everything in here is running *onUpdate*
-    -- it's trying to "act" every frame, by the conditions and statements set within it.
-    -- that's why you will be *spammed* with this print when you toggle your routine.
+    -- everything in here is running *on every tick*
+    -- its goal is to "act" every frame
+    -- that's why you will be spammed with this print when you toggle your routine.
     -- these are comments and you can remove them :)
     print("Wow, it's really running!")
 end)
@@ -152,19 +182,17 @@ end)
 
 > Now try a **/reload**. You should see your little OnLoad class print first. Go ahead and **enable the routine** by typing **/awful toggle** ... You should be spammed with that print you made above! If not, go back and make sure you followed every step **perfectly**. If even one character is wrong, **it will not work**.
 
-## **Cooking up a Spell Book**
+## **Creating our spell objects**
 
-#### .../example/ClassName/spells/**SpecName.lua**
+#### .../<Observe>{({ setState, ...state }) => (<>{state.name}</>)}</Observe>/warrior/**arms-spells.lua**
 
-- We're calling this file our **spell book** because it will contain a list of our spells as **spell objects**, created with `awful.Spell`
+- We're gonna call this file our **spell book** - it'll be where we create all of our **spell objects** with `awful.Spell`
 
-Be sure to replace all instances of **"example"** with your project name, **"warrior"** with your class name, and **"arms"** with your spec name. Also, you're gonna need to acquire the **spell IDs** for the spells you want it to use.
-
-> The most **convenient** way to collect **spell IDs** is with the AddOn [idTip](https://www.curseforge.com/wow/addons/idtip), it just adds them to the **tooltip** when **hovering spell icons**.
+You'll always need to acquire the correct **spell IDs** for spell objects to work properly. This is where idTip comes in handy! If you didn't get the AddOns I listed at the start of this guide, go get 'em.
 
 ```lua
-local Unlocker, awful, example = ...
-local arms = example.warrior.arms
+local Unlocker, awful, project = ...
+local arms = project.warrior.arms
 
 local Spell = awful.Spell
 awful.Populate({
@@ -179,15 +207,15 @@ awful.Populate({
 
 Here's what we've done in this file so far:
 
-- Created a local reference to our actor, **arms**, and a couple of other things to make the meat of the code look better.
+- Created a local reference to our actor, **arms**
 
 - Populated it, as well as our current environment with some delicious **spell objects**.
 
-Now, we'll initialize some **callbacks** for all of these spells. Prepare for some more code.
+Next, we'll initialize some **callbacks** for all of these spells. Prepare for some more code.
 
 ```lua
-local Unlocker, awful, example = ...
-local arms = example.warrior.arms
+local Unlocker, awful, project = ...
+local arms = project.warrior.arms
 
 local Spell = awful.Spell
 awful.Populate({
@@ -223,17 +251,17 @@ end)
 
 ## **It's ALIVE!!!**
 
-- Back in the **routine actor** file, let's start by just **calling** all of our **spell objects** in a basic priority arrangement and make it **auto attack** to generate **rage**.
+Back in our **routine actor** file, let's start by just **calling** all of our **spell objects** in a basic priority arrangement and make it **auto attack** to generate **rage**.
 
 You'll want to [pull up](https://www.youtube.com/watch?v=jjyDfLPKmNk) on a Training Dummy for this.
 
 > Lua is interpreted line by line, **left to right**, then **top to bottom**. Be sure to consciously sort your **actions** based on **highest** to **lowest** priority!
 
-> #### .../example/ClassName/**SpecName.lua**
+> #### .../<Observe>{({ setState, ...state }) => (<>{state.name}</>)}</Observe>/warrior/**arms-actor.lua**
 
 ```lua
-local Unlocker, awful, example = ...
-local arms = example.warrior.arms
+local Unlocker, awful, project = ...
+local arms = project.warrior.arms
 
 print("Example warrior locked and loaded!")
 
@@ -262,17 +290,17 @@ end)
 
 ![clappa](https://i.pinimg.com/originals/01/d9/a4/01d9a44af5aa852624b87f8f280f4942.gif ":size=128")
 
-Before we wrap things up, let's clean this routine up just a bit... We're going to add some _relatively_ advanced logic like it's nothing:
+Before we wrap things up, let's clean this routine up just a bit... We're gonna add some _relatively_ advanced logic like it's nothing:
 
 - Make it avoid attacking into physical immunities by **defining the damage type** of our **damaging spells**
 
-- Make it auto charge or heroic leap to the target in a way that feels natural, by **tracking player movement history**
+- Make it auto charge / leap to the target in a way that feels natural, by **tracking player movement history**
 
 - Make it cast warbreaker and avatar at high priority when `/awful burst` is used
 
 - Add some **fancy alerts** for our gap closers and burst abilities
 
-- Set **labels** to some of our **callbacks** and pass them to our spell objects to run specific callbacks
+- Apply **labels** to some of our **spell callbacks** and pass them in the actor, to have various logic at different priorities for the same spell
 
 - Make slam stop eating up all of our rage
 
@@ -280,11 +308,11 @@ Before we wrap things up, let's clean this routine up just a bit... We're going 
 
 - Use sweeping strikes when there's nothing else to do (lowest priority)
 
-### **The book expands**
+### **The spell book expands**
 
 ```lua
-local Unlocker, awful, example = ...
-local arms = example.warrior.arms
+local Unlocker, awful, project = ...
+local arms = project.warrior.arms
 
 local Spell = awful.Spell
 awful.Populate({
@@ -387,17 +415,15 @@ sweepingStrikes:Callback(function(spell)
 end)
 ```
 
-- See how we're able to set up **callback functions** for each **spell object** in a way that will allow us to stay organized? We can group our **conditions** and/or **actions** into neat little modular components that we can easily access from the actor via **callback labels**, like **"burst"**, **"maintain"**, or **"spread"** above. This naturally follows best practices for staying organized, and gives us the ability to easily move around the **priority** of what may soon be huge blocks of code.
+- See how we're able to set up **callback functions** for each **spell object** in a way that will allow us to stay organized? We can group our **conditions** and/or **actions** into neat little modular components that we can easily access from the actor via **callback labels**, like **"burst"**, **"maintain"**, or **"spread"** above. This naturally follows best practices for staying organized, maximizes performance by restricting the block of code from running unless the spell is off cd and usable, and gives us the ability to easily move around the **priority** of what may soon be huge blocks of code.
 
 - When we have another **reason** that a spell should be cast, we can add another **callback** under a different **label** and fit it into our existing priority list.
-
-> _Tip:_ Always do frequent tests with DevMode disabled to keep it ready for production.
 
 ### **It does more stuff!**
 
 ```lua
-local Unlocker, awful, example = ...
-local arms = example.warrior.arms
+local Unlocker, awful, project = ...
+local arms = project.warrior.arms
 
 print("Example warrior locked and loaded!")
 
