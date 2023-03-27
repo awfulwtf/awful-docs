@@ -1,0 +1,116 @@
+# Intro to Metatables
+
+> **Time Estimate:** 5-10 mins.
+
+## What is a "metatable"?
+
+At the most basic of levels: a table!
+
+The "metatable" of a table is a pointer<sup>1</sup> which tells the Lua interpreter where to find answers when a metamethod (we'll get to these later, stay with me here!) is invoked.
+
+*<sup>1</sup> - A pointer is a reference to something else, typically in programming a pointer references the memory address for something like a variable.*
+
+## How do metatables magically appear?
+
+Metatables are set and retrieved via two functions: `setmetatable` and `getmetatable`.
+
+Let's do a quick real-world test:
+```lua
+-- declare a generic table
+local x = { }
+-- set a value
+x.a = 1
+-- assign a metatable for table x, pointing to table x
+setmetatable( x, x )
+-- query and dump the metatable
+DevTools_Dump( getmetatable( x ) )
+```
+
+You'll find the result of the `DevTools_Dump` command looks like this:
+```lua
+a = 1
+```
+
+Because remember, the metatable is only a pointer telling the interpreter **where metamethods live**!
+
+### So what happened here?
+
+We created table `x`. We told the interpreter the location of the metatable for table `x` is **ALSO** table `x`!
+
+### Hang on, my brain hurts.. Why would we tell the interpreter the metatable for a table is.. the table?
+
+That brings us to the second part I referenced above, and soon all shall be revealed. Feel free to take a break, apply some ice to your forehead and continue on when you're ready!
+
+## What is a "metamethod"?
+
+Metamethods are the second half of the puzzle that allow metatables to make sense! Similarly to the metatable, at their most basic levels metamethods are just that: methods<sup>1</sup>!
+
+*<sup>1</sup> - Methods are very similar to functions, the key difference being methods receive their parent object as the first arg!*
+
+We mentioned in the previous section setting a metatable tells the Lua interpreter where to find answers when a metamethod is invoked. But, what does this mean?
+
+There are a number of "metamethods" known to the Lua interpreter. Some of the more popular of these metamethods include: `__index`, `__call` and `__newindex`.
+
+### Let's start with __call!
+
+Have you ever made a table where it could be useful to be able to use it like a function? This is exactly what `__call` provides!
+
+So how do we implement `__call`? It's as simple as creating any other function within a table. Let's work through a quick example:
+```lua
+-- declare a generic table
+local x = { }
+-- assign an arbitrary value
+x.a = 1
+-- let's assign __call to multiply a by a value we provide
+x.__call = function( self, multiple )
+    -- set a default value for multiple
+    multiple = multiple or 1
+    -- multiply by our arg and return!
+    return self.a * multiple
+end
+-- invoke it!
+x()
+```
+
+Hmm.. I've done the things, and invoked my `x` table like `x()` but nothing happened... what gives? Remember your training young padawan! In the previous section we mentioned the purpose of `setmetatable`, which is to tell the interpreter where to find answers when a metamethod is invoked! So let's take another crack at it...
+```lua
+-- declare a generic table
+local x = { }
+-- assign an arbitrary value
+x.a = 2
+-- let's assign __call to multiply a by a value we provide
+x.__call = function( self, multiple )
+    -- set a default value for multiple
+    multiple = multiple or 1
+    -- multiply by our arg and return!
+    return self.a * multiple
+end
+-- set the metatable!
+setmetatable( x, x )
+-- invoke it!
+x()
+x( 2 )
+```
+
+Oh boy it did stuff! We now see output like this:
+```lua
+2
+4
+```
+
+### OK, help me understand what just happened...
+
+Well let's recap!
+
+**Remember: the Lua interpreter is built to go looking for answers in the metatable when certain things are done with tables.**
+
+Following our above `__call` exercise, if you take a table and slap some parenthesis on the end of it `()` - this tells the interpreter to go looking **in the metatable for a `__call` method**!
+
+**So taking it from the top:**
+* We created table `x`
+* We told the interpreter, "Hey, there's a metatable for `x` here!", by using `setmetatable( x, x )`
+* We created metamethod `__call` by simply doing `x.__call = function( self, multiple ) -- doStuffHere end`
+* We invoked `x` like a method `x()`, indicating to the Lua interpreter to check the metatable (`getmetatable(x)`) for a `__call` method
+* Since we set our metatable - `x.__call()` is invoked and voila!
+
+Now go let your head cool off, pat yourself on the back and stay tuned for more on the other metamethods shortly!
