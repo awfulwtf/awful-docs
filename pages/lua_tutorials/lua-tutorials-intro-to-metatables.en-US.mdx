@@ -4,7 +4,7 @@
 
 ## What is a "metatable"?
 
-At the most basic of levels: a table!
+At the most basic level: a table!
 
 The "metatable" of a table is a pointer<sup>1</sup> which tells the Lua interpreter where to find answers when a metamethod (we'll get to these later, stay with me here!) is invoked.
 
@@ -33,11 +33,11 @@ a = 1
 
 Because remember, the metatable is only a pointer telling the interpreter **where metamethods live**!
 
-### So what happened here?
+#### So what happened here?
 
 We created table `x`. We told the interpreter the location of the metatable for table `x` is **ALSO** table `x`!
 
-### Hang on, my brain hurts.. Why would we tell the interpreter the metatable for a table is.. the table?
+#### Hang on, my brain hurts.. Why would we tell the interpreter the metatable for a table is.. the table?
 
 That brings us to the second part I referenced above, and soon all shall be revealed. Feel free to take a break, apply some ice to your forehead and continue on when you're ready!
 
@@ -45,13 +45,13 @@ That brings us to the second part I referenced above, and soon all shall be reve
 
 Metamethods are the second half of the puzzle that allow metatables to make sense! Similarly to the metatable, at their most basic levels metamethods are just that: methods<sup>1</sup>!
 
-*<sup>1</sup> - Methods are very similar to functions, the key difference being methods receive their parent object as the first arg!*
-
 We mentioned in the previous section setting a metatable tells the Lua interpreter where to find answers when a metamethod is invoked. But, what does this mean?
 
 There are a number of "metamethods" known to the Lua interpreter. Some of the more popular of these metamethods include: `__index`, `__call` and `__newindex`.
 
-### Let's start with __call!
+*<sup>1</sup> - Methods are very similar to functions, the key difference being methods receive their parent object as the first arg!*
+
+## Let's start with __call!
 
 Have you ever made a table where it could be useful to be able to use it like a function? This is exactly what `__call` provides!
 
@@ -98,7 +98,7 @@ Oh boy it did stuff! We now see output like this:
 4
 ```
 
-### OK, help me understand what just happened...
+#### OK, help me understand what just happened...
 
 Well let's recap!
 
