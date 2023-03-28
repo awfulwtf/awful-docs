@@ -1,5 +1,6 @@
 {
   "index": "Getting Started",
+  "lua_tutorials": "Lua Tutorials",
   "namespaces_and_loading": "Namespaces & Loading",
   "awful_objects": "Awful Objects",
   "spell_objects": "Spell Objects",
