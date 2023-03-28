@@ -60,13 +60,13 @@ So how do we implement `__call`? It's as simple as creating any other function w
 -- declare a generic table
 local x = { }
 -- assign an arbitrary value
-x.a = 1
+x.a = 2
 -- let's assign __call to multiply a by a value we provide
 x.__call = function( self, multiple )
     -- set a default value for multiple
     multiple = multiple or 1
-    -- multiply by our arg and return!
-    return self.a * multiple
+    -- multiply by our arg and print!
+    print( self.a * multiple )
 end
 -- invoke it!
 x()
@@ -82,8 +82,8 @@ x.a = 2
 x.__call = function( self, multiple )
     -- set a default value for multiple
     multiple = multiple or 1
-    -- multiply by our arg and return!
-    return self.a * multiple
+    -- multiply by our arg and print!
+    print( self.a * multiple )
 end
 -- set the metatable!
 setmetatable( x, x )
