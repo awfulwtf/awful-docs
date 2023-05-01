@@ -6,5 +6,6 @@
   "spell_objects": "Spell Objects",
   "item_objects": "Item Objects",
   "awful_toolbox": "Awful Toolbox",
-  "awful_ui": "Awful UI"
+  "awful_ui": "Awful UI",
+  "lua_obfuscation": "Lua Obfuscation"
 }
