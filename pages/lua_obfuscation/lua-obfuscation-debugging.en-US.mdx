@@ -1,0 +1,16 @@
+import Callout from 'nextra-theme-docs/callout'
+import Link from 'next/link'
+
+# Debugging obfuscated code
+
+Not only will attackers have a hard time but also you will as the in-game Lua errors will give obfuscated outputs. This means that _(local)_ variable names and line numbers are no longer trustworthy.
+
+## How to troubleshoot my users?
+
+The solution is to fire up VSCode, download the [lua-obfuscator](https://marketplace.visualstudio.com/items?itemName=ferib.lua-obfuscator) plugin and obfuscate your own code with the correct settings used by us.
+
+This way, you transform the original input code into the exact same obfuscated code.
+
+> Make sure your local version matches the same as the public one.
+>
+> Be aware that updates might happen to the obfuscator which can give different results. You might have to publish again for your live code to be obfuscated with the latest version.

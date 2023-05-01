@@ -1,0 +1,23 @@
+import Callout from 'nextra-theme-docs/callout'
+import Link from 'next/link'
+
+# What is it?
+
+"In software development, obfuscation is the act of creating source or machine code that is difficult for humans or computers to understand." - [Wikipedia](https://en.wikipedia.org/wiki/Obfuscation_(software))
+
+In other words, obfuscating your Lua will make it much harder for anyone to understand what it is doing while the computer process _(in our case, Wow)_ is still able to execute
+
+# But, why?
+
+Your code runs on the client-side and is susceptible to attacks such as memory dumping and reverse engineering.
+
+Wow prohibits closed-source AddOns, and thus pre-compiled Lua scripts are not permitted. Only Lua scripts in text format are allowed to be loaded. As a result, it is simple for Lua scripts to be intercepted or extracted.
+
+To increase the security of your scripts against these vulnerabilities, we offer an optional built-in obfuscator.
+
+# How to use
+
+It is easy, flip the box!
+
+![flip the box](/img/hashtag_flip_the_box.png)
+
