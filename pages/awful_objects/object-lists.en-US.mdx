@@ -15,6 +15,8 @@ import Link from 'next/link'
 
 > You must always grab lists fresh where you need them. You can't declare them locally outside of your working scope like you can [static objects](static-objects), or they'll become stale. Generally you'll wanna access them directly from the awful namespace, e.g, `awful.enemies`. Though there are a couple of exceptions where they can be accessed by name directly (like `enemies` or `group`), namely inside the **Routine Actor** and your Spell Object **:Callback** functions.
 
+
+
 ### Magic Methods
 
 > Object Lists contain several **Magic Methods** which allow you to do powerful searches, iterations, and more with the objects contained. Some examples:
@@ -252,6 +254,54 @@ end)
 ## imps
 
 Contains enemy warlock imp pets [mainly added so i could just check `#awful.imps` to know if lock was playing imp]
+
+# Custom Object Lists
+
+- They contain all other awful object list methods: https://docs.awful.wtf/awful_objects/object-lists#magic-methods
+- They only populate themselves when you attempt to read some value in them, like list.loop, list.filter, list[1] etc. Otherwise, they remain empty and do nothing. 
+- They're cleared each fw tick just like every other awful object list.
+
+Caveats: 
+- Population creates an awful object for every object of type(s) passed, which could be heavy  though awful objects are cached and retrieved by GUID from an associative array, which is constant read time, so i'm thinking it's not a huge concern for CPU time - but might live rent free in your memory sticks.
+- Length operator #list will not trigger population of the list, and will not return the correct value. Assuming Lua 5.1 used in WoW doesn't have __len metamethod, and too lazy to check. You can use list.length instead.
+
+awful.List:New(objectTypes, constructor)
+
+```lua
+local unlocker, awful, project = ...
+
+-- units (5), players (6)
+-- iterates OM objects by types passed, calling your constructor function and passing awful object for each
+-- each constructor return of value adds the object to your list
+project.dogs = awful.List:New({ 5, 6 }, function(object, objectType, guid)
+  -- some blacklist of object ids?
+  if object.id and blacklist[object.id] then return end
+  return object.class2 == "DRUID" or object.class2 == "WARRIOR" -- a list of warriors and druids idk? :skull: * 7
+end)
+
+-- use it like any other awful object list...
+project.dogs.loop(function(unit)
+  print(unit.name, unit.health)
+end)
+```
+## Object Types
+
+'''lua
+Object = 0,
+Item = 1,
+Container = 2,
+AzeriteEmpoweredItem = 3,
+AzeriteItem = 4,
+Unit = 5,
+Player = 6,
+ActivePlayer = 7,
+GameObject = 8,
+DynamicObject = 9,
+Corpse = 10,
+AreaTrigger = 11,
+SceneObject = 12,
+ConversationData = 13
+```
 
 # **Magic Methods**
 
