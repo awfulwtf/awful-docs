@@ -9,16 +9,18 @@ import Link from 'next/link'
 
 ## Making them
 
-### awful.Spell
+### awful.Spell/awful.NewSpell
 
 ```lua
 awful.Spell(spellID, traits) -> Spell Object
+awful.NewSpell(spellID[, traits]) -> Spell Object
 ```
 
 ### Example
 
 ```lua
 local mortalStrike = awful.Spell(12294, {damage = "physical"})
+local mortalStrike = awful.NewSpell(12294)
 ```
 
 Now `mortalStrike` contains all attributes, methods, and functions of a **spell object**. We can use it to gather all kinds of information about Mortal Strike, as well as actually cast it and set up various conditions for casting it. Most relevant information about the spell is gathered from WoW's API by the spell object, and presented in the form of **attributes**. We also told it that it's a physical damage ability - so it will make no mistake about which immunities to avoid attacking into.
