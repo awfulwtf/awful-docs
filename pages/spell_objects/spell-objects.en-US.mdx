@@ -9,17 +9,27 @@ import Link from 'next/link'
 
 ## Making them
 
-### awful.Spell/awful.NewSpell
+### awful.Spell
 
 ```lua
 awful.Spell(spellID, traits) -> Spell Object
-awful.NewSpell(spellID[, traits]) -> Spell Object
 ```
 
 ### Example
 
 ```lua
 local mortalStrike = awful.Spell(12294, {damage = "physical"})
+```
+
+### awful.NewSpell
+
+```lua
+awful.NewSpell(spellID[, traits]) -> Spell Object
+```
+
+### Example
+
+```lua
 local mortalStrike = awful.NewSpell(12294)
 ```
 
