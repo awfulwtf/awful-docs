@@ -27,9 +27,9 @@ import Link from 'next/link'
 >
 > We go over the rest at the end of this section, so stick around.
 
-# Lists
+## Lists
 
-## group
+### group
 
 Other players in our party or raid, **not including the player**.
 
@@ -51,7 +51,7 @@ rejuvenation:Callback(function(spell)
 end)
 ```
 
-## enemies
+### enemies
 
 Contains enemy units that are relevant to the player's current environment.
 
@@ -72,7 +72,7 @@ awful.enemies.loop(function(enemy)
 end)
 ```
 
-## friends
+### friends
 
 Contains all friendly players within render distance.
 
@@ -86,7 +86,7 @@ awful.friends.loop(function(friend)
 end)
 ```
 
-## dead
+### dead
 
 Contains all targetable dead units within render distance.
 
@@ -101,7 +101,7 @@ awful.dead.loop(function(unit)
 end)
 ```
 
-## totems
+### totems
 
 Contains enemy totems or related objects (PvP).
 
@@ -118,7 +118,7 @@ awful.totems.stomp(function(totem, uptime)
 end)
 ```
 
-## seeds
+### seeds
 
 Contains only living night fae wildseed units.
 
@@ -138,7 +138,7 @@ awful.seeds.track(function(seed, uptime)
 end)
 ```
 
-## explosives
+### explosives
 
 Contains M+ affix explosive objects, doesn't appear in awful.enemies.
 
@@ -150,7 +150,7 @@ someSpell:Callback("kill explosives", function(spell)
 end)
 ```
 
-## shades
+### shades
 
 Contains M+ affix spiteful shade objects
 
@@ -162,7 +162,7 @@ someSpell:Callback("kill shades", function(spell)
 end)
 ```
 
-## objects
+### objects
 
 Contains all objects of type `GameObject`
 
@@ -184,7 +184,7 @@ awful.objects.loop(function(obj)
 end)
 ```
 
-## triggers
+### triggers
 
 Contains all objects of type **area trigger**, both freindly and enemy.
 
@@ -200,23 +200,23 @@ awful.triggers.loop(function(trigger)
 end)
 ```
 
-## units
+### units
 
 Contains all objects of type **unit**, both friendly and enemy.
 
 - **Everywhere:** All objects of type **unit**.
 
-## pets
+### pets
 
 Contains all units that classify as another player's pet, both friendly and enemy.
 
 - **Everywhere:** All units that are pets, based on on WoW's `UnitIsOtherPlayersPet`
 
-## players
+### players
 
 Contains all objects of type **ActivePlayer**, both friendly and enemy.
 
-## allEnemies
+### allEnemies
 
 Contains all enemy units/players regardless of their combat status, excluding Charmed enemies such as Mindcontrolled group members.
 
@@ -230,15 +230,15 @@ aoeSpell:Callback(function(spell)
 end)
 ```
 
-## wwClones
+### wwClones
 
 Contains windwalker clones (from storm, earth, and fire)
 
-## tyrants
+### tyrants
 
 Contains Demonic Tyrants summoned by warlocks
 
-## rocks
+### rocks
 
 Contains enemy Earth Elementals (dwayne [the rock] johnson(s))
 
@@ -251,59 +251,19 @@ awful.rocks.loop(function(rock)
 end)
 ```
 
-## imps
+### imps
 
 Contains enemy warlock imp pets [mainly added so i could just check `#awful.imps` to know if lock was playing imp]
 
-# Custom Object Lists
+### afflicteds
 
-- They contain all other awful object list methods: https://docs.awful.wtf/awful_objects/object-lists#magic-methods
-- They only populate themselves when you attempt to read some value in them, like list.loop, list.filter, list[1] etc. Otherwise, they remain empty and do nothing. 
-- They're cleared each fw tick just like every other awful object list.
+Contains Afflicted units (Mythic+).
 
-Caveats: 
-- Population creates an awful object for every object of type(s) passed, which could be heavy  though awful objects are cached and retrieved by GUID from an associative array, which is constant read time, so i'm thinking it's not a huge concern for CPU time - but might live rent free in your memory sticks.
-- Length operator #list will not trigger population of the list, and will not return the correct value. Assuming Lua 5.1 used in WoW doesn't have __len metamethod, and too lazy to check. You can use list.length instead.
+### incorporeals
 
-awful.List:New(objectTypes, constructor)
+Contains Incorporeal units (Mythic+).
 
-```lua
-local unlocker, awful, project = ...
-
--- units (5), players (6)
--- iterates OM objects by types passed, calling your constructor function and passing awful object for each
--- each constructor return of value adds the object to your list
-project.dogs = awful.List:New({ 5, 6 }, function(object, objectType, guid)
-  -- some blacklist of object ids?
-  if object.id and blacklist[object.id] then return end
-  return object.class2 == "DRUID" or object.class2 == "WARRIOR" -- a list of warriors and druids idk? :skull: * 7
-end)
-
--- use it like any other awful object list...
-project.dogs.loop(function(unit)
-  print(unit.name, unit.health)
-end)
-```
-## Object Types
-
-```lua
-Object = 0,
-Item = 1,
-Container = 2,
-AzeriteEmpoweredItem = 3,
-AzeriteItem = 4,
-Unit = 5,
-Player = 6,
-ActivePlayer = 7,
-GameObject = 8,
-DynamicObject = 9,
-Corpse = 10,
-AreaTrigger = 11,
-SceneObject = 12,
-ConversationData = 13
-```
-
-# **Magic Methods**
+## **Magic Methods**
 
 > They're available for **every single awful object list**
 >
@@ -311,7 +271,7 @@ ConversationData = 13
 >
 > All **Magic Methods** return `true`, so you can weave them into conditional statements if you want
 
-## around
+### around
 
 > Find the number of units around a unit or position
 >
@@ -332,7 +292,7 @@ local count, total, objects = list.around(unit, distance, criteria)
   - 2. **total count**: `{number}`, the total number of units around, even if they did not meet the criteria
   - 3. **objects**: `{array}`, array of objects that were around and met criteria (if any)
 
-### Examples:
+Examples:
 
 ```lua
 -- checking breakable cc around me for brutal slash
@@ -361,7 +321,7 @@ if enemies.around({sx, sy, sz}, 12, bcc) == 0 then
 end
 ```
 
-## filter
+### filter
 
 > The filter method creates a new object list containing all objects that pass the test implemented by the provided function.
 
@@ -375,7 +335,7 @@ enemyMelee.loop(function(obj)
 end)
 ```
 
-## loop
+### loop
 
 > Iterate the object list, calling the provided function for each object.
 >
@@ -433,7 +393,7 @@ end)
 
 ![lol](/img/lol.png)
 
-## stomp
+### stomp
 
 > Very similar to `loop`, but with a couple of key differences:
 >
@@ -450,7 +410,7 @@ awful.totems.stomp(function(totem, uptime)
 end)
 ```
 
-## sort
+### sort
 
 > Sorts the list using basic Lua `table.sort`
 >
@@ -458,4 +418,51 @@ end)
 
 ```lua
 awful.enemies.sort(function(x,y) return x.hp < y.hp end)
+```
+## Custom Object Lists
+
+- They contain all other awful object list methods: https://docs.awful.wtf/awful_objects/object-lists#magic-methods
+- They only populate themselves when you attempt to read some value in them, like list.loop, list.filter, list[1] etc. Otherwise, they remain empty and do nothing. 
+- They're cleared each fw tick just like every other awful object list.
+
+Caveats: 
+- Population creates an awful object for every object of type(s) passed, which could be heavy  though awful objects are cached and retrieved by GUID from an associative array, which is constant read time, so i'm thinking it's not a huge concern for CPU time - but might live rent free in your memory sticks.
+- Length operator #list will not trigger population of the list, and will not return the correct value. Assuming Lua 5.1 used in WoW doesn't have __len metamethod, and too lazy to check. You can use list.length instead.
+
+awful.List:New(objectTypes, constructor)
+
+```lua
+local unlocker, awful, project = ...
+
+-- units (5), players (6)
+-- iterates OM objects by types passed, calling your constructor function and passing awful object for each
+-- each constructor return of value adds the object to your list
+project.dogs = awful.List:New({ 5, 6 }, function(object, objectType, guid)
+  -- some blacklist of object ids?
+  if object.id and blacklist[object.id] then return end
+  return object.class2 == "DRUID" or object.class2 == "WARRIOR" -- a list of warriors and druids idk? :skull: * 7
+end)
+
+-- use it like any other awful object list...
+project.dogs.loop(function(unit)
+  print(unit.name, unit.health)
+end)
+```
+Object Types
+
+```lua
+Object = 0,
+Item = 1,
+Container = 2,
+AzeriteEmpoweredItem = 3,
+AzeriteItem = 4,
+Unit = 5,
+Player = 6,
+ActivePlayer = 7,
+GameObject = 8,
+DynamicObject = 9,
+Corpse = 10,
+AreaTrigger = 11,
+SceneObject = 12,
+ConversationData = 13
 ```
